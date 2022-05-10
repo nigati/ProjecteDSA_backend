@@ -9,7 +9,7 @@ public interface UserManager {
 
 
     public User addUser(User user);
-    public boolean login(String username, String password);
+    public User login(String username, String password);
     public int size();
     public List<Item> catalogoTienda ();
 }

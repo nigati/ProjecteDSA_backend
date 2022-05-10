@@ -43,21 +43,21 @@ public class UserManagerImpl implements UserManager {
         return user;
     }
 
-    public boolean login(String username, String password) {
+    public User login(String username, String password) {
         User u;
         try {
             u = hmUsers.get(username);
         }
         catch (NullPointerException e) {
-            return false;
+            return null;
         }
             if (!password.equals(u.getPassword())) {
                 logger.warn("Incorrect password");
-                return false;
+                return null;
 
 
             }
-            return true;
+            return u;
         }
 
     public List<Item> catalogoTienda ()
@@ -67,7 +67,9 @@ public class UserManagerImpl implements UserManager {
         items.add (new Item("Escudo", "Proteccion extra", 230.0));
         items.add (new Item("Espada", "Espada dorada", 150.0));
         items.add (new Item("Comida", "Equivale a media vida", 20.0));
+        logger.info("Catalogo cargado");
         return items;
+
 
     }
 }

@@ -5,6 +5,7 @@ import edu.upc.dsa.UserManager;
 import edu.upc.dsa.UserManagerImpl;
 
 import edu.upc.dsa.models.Item;
+import edu.upc.dsa.models.LogInParams;
 import edu.upc.dsa.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -105,6 +106,30 @@ public class UserService {
 
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
         return Response.status(201).entity(entity).build()  ;
+
+    }
+
+    @POST
+    @ApiOperation(value = "log in user", notes = "xd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response= User.class),
+            @ApiResponse(code = 404, message = "Incorrect username or password")
+
+    })
+
+    @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response logIn(LogInParams loginpar) {
+
+        User u = this.Um.login(loginpar.getName(),loginpar.getPass());
+        if (u != null)
+        {
+            return Response.status(201).entity(u).build();
+        }
+        else
+        {
+            return Response.status(404).entity(u).build();
+        }
 
     }
 
