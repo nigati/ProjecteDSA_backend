@@ -1,7 +1,6 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.models.Object;
-import edu.upc.dsa.models.Track;
+import edu.upc.dsa.models.Item;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -14,12 +13,12 @@ public class UserManagerImpl implements UserManager {
     private static UserManager instance;
     protected List<User> users;
     private HashMap<String, User> hmUsers;
-    protected List<Object> objects;
+    protected List<Item> items;
     final static Logger logger = Logger.getLogger(UserManagerImpl.class);
 
     private UserManagerImpl() {
         this.users = new LinkedList<>();
-        this.objects = new LinkedList<>();
+        this.items = new LinkedList<>();
         hmUsers = new HashMap<String, User>();
     }
 
@@ -60,4 +59,15 @@ public class UserManagerImpl implements UserManager {
             }
             return true;
         }
+
+    public List<Item> catalogoTienda ()
+    {
+        items.add (new Item("Vida extra", "Pocion para una vida extra", 100.0));
+        items.add (new Item("Sierra", "Sierra que corta mucho", 75.0));
+        items.add (new Item("Escudo", "Proteccion extra", 230.0));
+        items.add (new Item("Espada", "Espada dorada", 150.0));
+        items.add (new Item("Comida", "Equivale a media vida", 20.0));
+        return items;
+
+    }
 }

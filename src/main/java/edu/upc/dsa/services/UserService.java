@@ -3,7 +3,8 @@ package edu.upc.dsa.services;
 
 import edu.upc.dsa.UserManager;
 import edu.upc.dsa.UserManagerImpl;
-import edu.upc.dsa.models.Track;
+
+import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -84,11 +85,29 @@ public class UserService {
 
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response newTrack(User user) {
+    public Response newUser(User user) {
 
-        if (user.getUsername()==null || track.getTitle()==null)  return Response.status(500).entity(track).build();
-        this.tm.addUser(track);
-        return Response.status(201).entity(track).build();
+        if (user.getUsername()==null || user.getEmail()==null || user.getPassword()==null)  return Response.status(500).entity(user).build();
+        this.Um.addUser(user);
+        return Response.status(201).entity(user).build();
     }
+
+    @GET
+    @ApiOperation(value = "get all Objects in Catalogo", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Item.class, responseContainer="List"),
+    })
+    @Path("/catalogo")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getObjects() {
+
+        List<Item> items = this.Um.catalogoTienda();
+
+        GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
+        return Response.status(201).entity(entity).build()  ;
+
+    }
+
+
 
 }
