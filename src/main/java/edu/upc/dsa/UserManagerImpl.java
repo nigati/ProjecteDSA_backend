@@ -35,38 +35,47 @@ public class UserManagerImpl implements UserManager {
     }
 
     public User addUser(User user) {
-        logger.info("new User " + user);
-
-        this.users.add(user);
-        this.hmUsers.put(user.getUsername(), user);
-        logger.info("new User added");
-        return user;
+        logger.info("Trying to add a new User ");
+        User aux = hmUsers.get(user.getUsername());//Comprobamos que no este ya registrado
+        if (aux == null) //Si no esta en el hashmap, lo añadimos
+        {
+            this.users.add(user);
+            this.hmUsers.put(user.getUsername(), user);
+            logger.info("new User added");
+            return user;
+        } else //si ya tenemos un usuario registrado, retornamos null
+        {
+            logger.info("this username is already used");
+            return null;
+        }
     }
 
     public User login(String username, String password) {
-        User u;
-        try {
-            u = hmUsers.get(username);
-        }
-        catch (NullPointerException e) {
-            return null;
-        }
+        User u=hmUsers.get(username);
+        if (u!=null) { //try
+
             if (!password.equals(u.getPassword())) {
                 logger.warn("Incorrect password");
                 return null;
 
-
             }
-            return u;
+            else {
+                logger.warn("User logged in");
+                return u;
+            }
+        } else //catch (NullPointerException e)
+        {
+            return null;
         }
 
-    public List<Item> catalogoTienda ()
-    {
-        items.add (new Item("Vida extra", "Pocion para una vida extra", 100.0));
-        items.add (new Item("Sierra", "Sierra que corta mucho", 75.0));
-        items.add (new Item("Escudo", "Proteccion extra", 230.0));
-        items.add (new Item("Espada", "Espada dorada", 150.0));
-        items.add (new Item("Comida", "Equivale a media vida", 20.0));
+    }
+
+    public List<Item> catalogoTienda() {
+        items.add(new Item("Vida extra", "Pocion para una vida extra", 100.0));
+        items.add(new Item("Sierra", "Sierra que corta mucho", 75.0));
+        items.add(new Item("Escudo", "Proteccion extra", 230.0));
+        items.add(new Item("Espada", "Espada dorada", 150.0));
+        items.add(new Item("Comida", "Equivale a media vida", 20.0));
         logger.info("Catalogo cargado");
         return items;
 

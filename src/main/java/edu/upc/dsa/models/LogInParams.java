@@ -1,8 +1,8 @@
 package edu.upc.dsa.models;
 
 public class LogInParams {
-    String name;
-    String pass;
+    public String name;
+    public String pass;
 
     public LogInParams(String name, String pass)
     {

@@ -88,9 +88,20 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newUser(User user) {
 
-        if (user.getUsername()==null || user.getEmail()==null || user.getPassword()==null)  return Response.status(500).entity(user).build();
-        this.Um.addUser(user);
-        return Response.status(201).entity(user).build();
+        if (user.getUsername()==null || user.getEmail()==null || user.getPassword()==null)
+        {
+            return Response.status(500).entity(user).build();
+        }
+
+        User checking = this.Um.addUser(user);
+        if (checking != null)
+        {
+            return Response.status(201).entity(user).build();
+        }
+        else
+        {
+            return Response.status(500).entity(user).build();
+        }
     }
 
     @GET
@@ -121,15 +132,13 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response logIn(LogInParams loginpar) {
 
-        User u = this.Um.login(loginpar.getName(),loginpar.getPass());
-        if (u != null)
-        {
-            return Response.status(201).entity(u).build();
-        }
-        else
-        {
-            return Response.status(404).entity(u).build();
-        }
+            User u = this.Um.login(loginpar.getName(), loginpar.getPass());
+            if (u!= null) {
+                return Response.status(201).entity(u).build();
+            }
+            else {
+                return Response.status(404).entity(u).build();
+            }
 
     }
 
