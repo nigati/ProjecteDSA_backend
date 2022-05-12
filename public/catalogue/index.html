@@ -11,42 +11,46 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
-            $("button").click(function () {
+<!--            $("button").click(function () {-->
                 //var username = $("#usr").val();
                 var url = "http://localhost:8080/dsaApp/users/catalogo";
                 //alert(url);
                 $.get(url, function (data, status) {
-                    alert("Name: " + data[0].name + "\nDescription: " + data[0].description + "\nCoins: " + data[0].coins + "\nStatus: " + status);
-                    //$("#tabla").append("<tr><td>" + data.name +"</td><td>"+ data.followers +"</td><td>"+data.bio+ "</td></tr>");
-                });
-            });
+<!--                    alert("Hello. Name: " + data[0].name + "\nDescription: " + data[0].description + "\nCoins: " + data[0].coins + "\nStatus: " + status);-->
+                    for (var key=0, size = data.length; key<size; key++)
+                    {
+                        $("#tabla").append("<tr><td>" + data[key].name +"</td><td>"+ data[key].description +"</td><td>"+data[key].coins+ "</td></tr>");
+
+                    }
+                    });
+<!--            });-->
         });
+
 
     </script>
 </head>
 <body>
 
 <div class="jumbotron text-center">
-    <h1>Hello World!! :)</h1>
-    <p>Por favor introduce tu usuario de git</p>
+    <h1>CATALOGUE</h1>
 </div>
 
-<div class="container-md">
-    <div class="form-group">
-        <label for="usr">Usuario:</label>
-        <input type="text" class="form-control" id="usr">
-    </div>
-    <button type="button" class="btn btn-info " id="boton">Buscar</button>
-</div>
+<!--<div class="container-md">-->
+<!--    <div class="form-group">-->
+<!--        <label for="usr">Usuario:</label>-->
+<!--        <input type="text" class="form-control" id="usr">-->
+<!--    </div>-->
+<!--    <button type="button" class="btn btn-info " id="boton">Buscar</button>-->
+<!--</div>-->
 
 <div class="container">
-    <h3>This is what we found out about you</h3>
+    <h3>This is the list of Items available</h3>
     <table class="table table-striped" id="tabla">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Followers</th>
-            <th>Bio</th>
+            <th>Item name</th>
+            <th>Description</th>
+            <th>Price</th>
         </tr>
         </thead>
         <tbody>
