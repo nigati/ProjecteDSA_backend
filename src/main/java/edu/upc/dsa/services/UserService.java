@@ -131,7 +131,6 @@ public class UserService {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response logIn(LogInParams loginpar) {
-
             User u = this.Um.login(loginpar.getName(), loginpar.getPass());
             if (u!= null) {
                 return Response.status(201).entity(u).build();
@@ -139,7 +138,6 @@ public class UserService {
             else {
                 return Response.status(404).entity(u).build();
             }
-
     }
 
 
