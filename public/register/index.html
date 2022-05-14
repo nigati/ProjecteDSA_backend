@@ -20,12 +20,12 @@
                     password: $("#password").val()
                 }
                 alert(dataBody.username);
-                //var URL = "/dsaApp/users/register";
-                var URL = "dsaApp/users/register";
+                
+                var URL = "/dsaApp/users/register";
                 //alert(url);
                  $.post({
                     url: URL,
-                    data: dataBody,
+                    data: JSON.stringify(dataBody),
                     contentType: 'application/json; charset=utf-8'
                 })
 

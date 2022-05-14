@@ -11,21 +11,28 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
+            alert("Hola");
             $("#botonLogIn").click(function () {
-                var login= {
+                var dataBody=
+                {
                     name: $("#usr").val(),
                     pass: $("#pass").val(),
+
                 }
-                var url = "http://localhost:8080/dsaApp/users/login";
+                alert(dataBody.name);
+                var URL = "/dsaApp/users/login";
                 //alert(url);
-                 $.post(url,login,
-                 function(data, status){
-                    alert("Data: " + data.username + "\nStatus: " + status);
-                 });
+                 $.post({
+                    url: URL,
+                    data: JSON.stringify(dataBody),
+                    contentType: 'application/json; charset=utf-8'
+                })
 
+                    .done(function (data, status) {
+                        alert("Login: " + data.username + " wellcome! \nStatus: " + status);
+                    });
+            });
         });
-
-
     </script>
 </head>
 <body>
