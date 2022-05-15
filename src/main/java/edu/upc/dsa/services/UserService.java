@@ -88,9 +88,9 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newUser(User user) {
 
-        if (user.getUsername()==null || user.getEmail()==null || user.getPassword()==null)
+        if (user.getUsername().equals("") || user.getEmail().equals("") || user.getPassword().equals(""))
         {
-            return Response.status(500).entity(user).build();
+            return Response.status(404).entity(user).build();
         }
 
         User checking = this.Um.addUser(user);
@@ -100,7 +100,7 @@ public class UserService {
         }
         else
         {
-            return Response.status(500).entity(user).build();
+            return Response.status(404).entity(user).build();
         }
     }
 
