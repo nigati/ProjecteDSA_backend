@@ -81,4 +81,8 @@ public class UserManagerImpl implements UserManager {
 
 
     }
+
+    public List<User> getUsers(){
+        return users;
+    }
 }

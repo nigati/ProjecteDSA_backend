@@ -12,4 +12,5 @@ public interface UserManager {
     public User login(String username, String password);
     public int size();
     public List<Item> catalogoTienda ();
+    public List<User> getUsers();
 }
