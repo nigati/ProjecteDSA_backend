@@ -90,7 +90,7 @@ public class UserService {
 
         if (user.getUsername().equals("") || user.getEmail().equals("") || user.getPassword().equals(""))
         {
-            return Response.status(404).entity(user).build();
+            return Response.status(404).build();
         }
 
         User checking = this.Um.addUser(user);
@@ -100,7 +100,7 @@ public class UserService {
         }
         else
         {
-            return Response.status(404).entity(user).build();
+            return Response.status(404).build();
         }
     }
 
