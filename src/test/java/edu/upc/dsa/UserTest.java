@@ -38,11 +38,11 @@ public class UserTest {
         User gilbert= myUserManager.login("Gilbert","guapo");
         Assert.assertEquals("Gilbert", gilbert.getUsername());
         LogInParams login1= new LogInParams("Claudia", "abc");
-        User auxClaudia= myUserManager.login(login1.getName(),login1.getPass());
+        User auxClaudia= myUserManager.login(login1.getUsername(),login1.getPassword());
         Assert.assertEquals(null,auxClaudia);
 
         LogInParams login2= new LogInParams("Gilbert", "guapo");
-        User auxGilb= myUserManager.login(login2.getName(),login2.getPass());
+        User auxGilb= myUserManager.login(login2.getUsername(),login2.getPassword());
         Assert.assertEquals("guapo",auxGilb.getPassword());
 
 
