@@ -11,7 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
-            alert("Hola");
+            //alert("Hola");
             $("#botonRegistro").click(function () {
                 var dataBody=
                 {
@@ -19,8 +19,8 @@
                     email: $("#email").val(),
                     password: $("#password").val()
                 }
-                alert(dataBody.username);
-                
+                //alert(dataBody.username);
+
                 var URL = "/dsaApp/users/register";
                 //alert(url);
                  $.post({
@@ -30,7 +30,8 @@
                 })
 
                     .done(function (data, status) {
-                        alert("Data: " + data.username + " wellcome! \nStatus: " + status);
+                        //alert("Data: " + data.username + " wellcome! \nStatus: " + status);
+                        alert("Wellcome! \nStatus: " + status);
                     });
             });
 
