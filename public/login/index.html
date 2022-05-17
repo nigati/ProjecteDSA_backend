@@ -19,7 +19,7 @@
                     pass: $("#pass").val(),
 
                 }
-                alert(dataBody.name);
+
                 var URL = "/dsaApp/users/login";
                 //alert(url);
                  $.post({
@@ -27,10 +27,12 @@
                     data: JSON.stringify(dataBody),
                     contentType: 'application/json; charset=utf-8'
                 })
-
                     .done(function (data, status) {
                         alert("Login: " + data.username + " wellcome! \nStatus: " + status);
-                    });
+                    })
+                    .fail(function (xhr, err) {
+                        alert("Something went wrong");
+                    })
             });
         });
     </script>

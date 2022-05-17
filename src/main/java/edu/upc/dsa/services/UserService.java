@@ -155,7 +155,7 @@ public class UserService {
                 return Response.status(201).entity(u).build();
             }
             else {
-                return Response.status(404).entity(u).build();
+                return Response.status(404).build();
             }
     }
 
