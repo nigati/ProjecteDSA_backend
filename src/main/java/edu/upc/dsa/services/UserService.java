@@ -22,11 +22,13 @@ import java.util.List;
 @Path("/users")
 public class UserService {
 
-    private UserManager um;
+    private UserManager Um;
 
     public UserService() {
-        this.um = UserManagerImpl.getInstance();
+        this.Um = UserManagerImpl.getInstance();
+        Um.addUser(new User("admin","admin@admin","admin"));
     }
+
 /*
     @GET
     @ApiOperation(value = "get all Track", notes = "asdasd")
@@ -76,25 +78,6 @@ public class UserService {
 
 */
 
-    @GET
-    @ApiOperation(value = "get all Users")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
-            @ApiResponse(code = 401, message = "No users")
-    })
-    @Path("/users")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsers() {
-
-        List<User> users = this.um.getUsers();
-
-        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
-        if(users != null)
-            return Response.status(201).entity(entity).build();
-        return Response.status(401).build();
-    }
-
-
     @POST
     @ApiOperation(value = "create a new user", notes = "xd")
     @ApiResponses(value = {
@@ -109,17 +92,17 @@ public class UserService {
 
         if (user.getUsername().equals("") || user.getEmail().equals("") || user.getPassword().equals(""))
         {
-            return Response.status(404).build();
+            return Response.status(404).entity(user).build();
         }
 
-        User checking = this.um.addUser(user);
+        User checking = this.Um.addUser(user);
         if (checking != null)
         {
             return Response.status(201).entity(user).build();
         }
         else
         {
-            return Response.status(404).build();
+            return Response.status(404).entity(user).build();
         }
     }
 
@@ -132,7 +115,7 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getObjects() {
 
-        List<Item> items = this.um.catalogoTienda();
+        List<Item> items = this.Um.catalogoTienda();
 
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
         return Response.status(201).entity(entity).build()  ;
@@ -150,15 +133,23 @@ public class UserService {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response logIn(LogInParams loginpar) {
+<<<<<<< HEAD
         //System.out.println("PARAMETROS "+loginpar.getUsername()+" ===> "+loginpar.getPassword());
             User u = this.um.login(loginpar.getUsername(), loginpar.getPassword());
+=======
+            User u = this.Um.login(loginpar.getUsername(), loginpar.getPassword());
+>>>>>>> 9de152336303dc1002a5b1324b4793e4bb0a9d95
             if (u!= null) {
                 return Response.status(201).entity(u).build();
             }
             else {
+<<<<<<< HEAD
                 //System.out.println("Usuario o contraseña incorrectos");
                 return Response.status(404).build();
 
+=======
+                return Response.status(404).entity(u).build();
+>>>>>>> 9de152336303dc1002a5b1324b4793e4bb0a9d95
             }
     }
 
