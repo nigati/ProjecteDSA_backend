@@ -22,11 +22,11 @@ import java.util.List;
 @Path("/users")
 public class UserService {
 
-    private UserManager Um;
+    private UserManager um;
 
     public UserService() {
-        this.Um = UserManagerImpl.getInstance();
-        Um.addUser(new User("admin","admin@admin","admin"));
+        this.um = UserManagerImpl.getInstance();
+        um.addUser(new User("admin","admin@admin","admin"));
     }
 
 /*
@@ -95,7 +95,7 @@ public class UserService {
             return Response.status(404).entity(user).build();
         }
 
-        User checking = this.Um.addUser(user);
+        User checking = this.um.addUser(user);
         if (checking != null)
         {
             return Response.status(201).entity(user).build();
@@ -115,7 +115,7 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getObjects() {
 
-        List<Item> items = this.Um.catalogoTienda();
+        List<Item> items = this.um.catalogoTienda();
 
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
         return Response.status(201).entity(entity).build()  ;
@@ -133,23 +133,18 @@ public class UserService {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response logIn(LogInParams loginpar) {
-<<<<<<< HEAD
+
         //System.out.println("PARAMETROS "+loginpar.getUsername()+" ===> "+loginpar.getPassword());
             User u = this.um.login(loginpar.getUsername(), loginpar.getPassword());
-=======
-            User u = this.Um.login(loginpar.getUsername(), loginpar.getPassword());
->>>>>>> 9de152336303dc1002a5b1324b4793e4bb0a9d95
+
             if (u!= null) {
                 return Response.status(201).entity(u).build();
             }
             else {
-<<<<<<< HEAD
+
                 //System.out.println("Usuario o contraseña incorrectos");
                 return Response.status(404).build();
 
-=======
-                return Response.status(404).entity(u).build();
->>>>>>> 9de152336303dc1002a5b1324b4793e4bb0a9d95
             }
     }
 
