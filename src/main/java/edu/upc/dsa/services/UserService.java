@@ -22,11 +22,13 @@ import java.util.List;
 @Path("/users")
 public class UserService {
 
-    private UserManager Um;
+    private UserManager um;
 
     public UserService() {
-        this.Um = UserManagerImpl.getInstance();
+        this.um = UserManagerImpl.getInstance();
+        um.addUser(new User("admin","admin@admin","admin"));
     }
+
 /*
     @GET
     @ApiOperation(value = "get all Track", notes = "asdasd")
@@ -93,7 +95,7 @@ public class UserService {
             return Response.status(404).entity(user).build();
         }
 
-        User checking = this.Um.addUser(user);
+        User checking = this.um.addUser(user);
         if (checking != null)
         {
             return Response.status(201).entity(user).build();
@@ -113,7 +115,7 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getObjects() {
 
-        List<Item> items = this.Um.catalogoTienda();
+        List<Item> items = this.um.catalogoTienda();
 
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
         return Response.status(201).entity(entity).build()  ;
@@ -131,7 +133,7 @@ public class UserService {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response logIn(LogInParams loginpar) {
-            User u = this.Um.login(loginpar.getName(), loginpar.getPass());
+            User u = this.um.login(loginpar.getName(), loginpar.getPass());
             if (u!= null) {
                 return Response.status(201).entity(u).build();
             }
