@@ -1,32 +1,32 @@
 package edu.upc.dsa.models;
 
 public class LogInParams {
-    public String name;
-    public String pass;
+    public String username;
+    public String password;
 
     public LogInParams() {}
     public LogInParams(String name, String pass)
     {
-        this.name=name;
-        this.pass=pass;
+        this.username =name;
+        this.password =pass;
     }
 
-    public String getName()
+    public String getUsername()
     {
-        return name;
+        return username;
     }
 
-    public String getPass()
+    public String getPassword()
     {
-        return pass;
+        return password;
     }
 
-    public void setName(String name){
-        this.name=name;
+    public void setUsername(String username){
+        this.username = username;
     }
 
-    public void setPass(String pass)
+    public void setPassword(String password)
     {
-        this.pass=pass;
+        this.password = password;
     }
 }

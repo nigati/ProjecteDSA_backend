@@ -22,11 +22,11 @@ import java.util.List;
 @Path("/users")
 public class UserService {
 
-    private UserManager um;
+    private UserManager Um;
 
     public UserService() {
-        this.um = UserManagerImpl.getInstance();
-        um.addUser(new User("admin","admin@admin","admin"));
+        this.Um = UserManagerImpl.getInstance();
+        Um.addUser(new User("admin","admin@admin","admin"));
     }
 
 /*
@@ -95,7 +95,7 @@ public class UserService {
             return Response.status(404).entity(user).build();
         }
 
-        User checking = this.um.addUser(user);
+        User checking = this.Um.addUser(user);
         if (checking != null)
         {
             return Response.status(201).entity(user).build();
@@ -115,7 +115,7 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getObjects() {
 
-        List<Item> items = this.um.catalogoTienda();
+        List<Item> items = this.Um.catalogoTienda();
 
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
         return Response.status(201).entity(entity).build()  ;
@@ -133,7 +133,7 @@ public class UserService {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response logIn(LogInParams loginpar) {
-            User u = this.um.login(loginpar.getName(), loginpar.getPass());
+            User u = this.Um.login(loginpar.getUsername(), loginpar.getPassword());
             if (u!= null) {
                 return Response.status(201).entity(u).build();
             }
