@@ -150,13 +150,13 @@ public class UserService {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response logIn(LogInParams loginpar) {
-        System.out.println("PARAMETROS "+loginpar.getUsername()+" ===> "+loginpar.getPassword());
+        //System.out.println("PARAMETROS "+loginpar.getUsername()+" ===> "+loginpar.getPassword());
             User u = this.um.login(loginpar.getUsername(), loginpar.getPassword());
             if (u!= null) {
                 return Response.status(201).entity(u).build();
             }
             else {
-                System.out.println("Usuario o contraseña incorrectos");
+                //System.out.println("Usuario o contraseña incorrectos");
                 return Response.status(404).build();
 
             }

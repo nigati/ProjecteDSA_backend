@@ -29,9 +29,11 @@
                 })
                     .done(function (data, status) {
                         alert("Login: " + data.username + " wellcome! \nStatus: " + status);
+                        $(location).prop('href', '/')
                     })
                     .fail(function (xhr, err) {
                         alert("Something went wrong");
+                        location.reload();
                     })
             });
         });
@@ -42,18 +44,42 @@
 
 
 
+<!--<div class="jumbotron text-center">-->
+<!--    <h1>LOGIN</h1>-->
+<!--</div>-->
+
+<!--<div class="container-md">-->
+<!--    <div class="form-group">-->
+<!--        <label for="usr">User name:</label>-->
+<!--        <input type="text" class="form-control" id="usr">-->
+<!--        <label for="pass">Password:</label>-->
+<!--        <input type="text" class="form-control" id="pass">-->
+<!--    </div>-->
+<!--    <button type="button" class="btn btn-info " id="botonLogIn">Log In</button>-->
+<!--</div>-->
+
+
 <div class="jumbotron text-center">
     <h1>LOGIN</h1>
 </div>
+<div class="container">
 
-<div class="container-md">
-    <div class="form-group">
-        <label for="usr">User name:</label>
-        <input type="text" class="form-control" id="usr">
-        <label for="pass">Password:</label>
-        <input type="text" class="form-control" id="pass">
-    </div>
-    <button type="button" class="btn btn-info " id="botonLogIn">Log In</button>
+    <form class="was-validated">
+        <div class="form-group">
+            <label for="usr">Username:</label>
+            <input type="text" class="form-control" id="usr" placeholder="Enter username" name="usr" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+        </div>
+        <div class="form-group">
+            <label for="pass">Password:</label>
+            <input type="password" class="form-control" id="pass" placeholder="Enter password" name="pass" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+        </div>
+
+        <a type="submit" class="btn btn-primary" id="botonLogIn">Log In</a>
+    </form>
 </div>
 
 </body>
