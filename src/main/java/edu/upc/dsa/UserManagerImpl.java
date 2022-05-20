@@ -69,6 +69,9 @@ public class UserManagerImpl implements UserManager {
         }
 
     }
+    public void logOut (String username){
+
+    }
 
     public List<Item> catalogoTienda() {
         items.add(new Item("Vida extra", "Pocion para una vida extra", 100.0));
