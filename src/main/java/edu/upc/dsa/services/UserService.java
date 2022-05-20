@@ -26,7 +26,9 @@ public class UserService {
 
     public UserService() {
         this.um = UserManagerImpl.getInstance();
-        um.addUser(new User("admin","admin@admin","admin"));
+        if(um.getUsers().size()==0){
+            um.addUser(new User("admin","admin@admin","admin"));
+        }
     }
 
 /*
@@ -126,7 +128,7 @@ public class UserService {
     @ApiOperation(value = "log in user", notes = "xd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response= User.class),
-            @ApiResponse(code = 404, message = "Incorrect username or password")
+            @ApiResponse(code = 401, message = "Incorrect username or password")
 
     })
 
@@ -143,7 +145,7 @@ public class UserService {
             else {
 
                 //System.out.println("Usuario o contraseña incorrectos");
-                return Response.status(404).build();
+                return Response.status(401).build();
 
             }
     }
