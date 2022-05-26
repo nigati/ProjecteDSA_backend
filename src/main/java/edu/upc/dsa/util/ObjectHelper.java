@@ -1,4 +1,4 @@
-package edu.upc.dsa.mysql;
+package edu.upc.dsa.util;
 
 
 import java.lang.reflect.Field;

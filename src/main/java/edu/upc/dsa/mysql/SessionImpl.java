@@ -1,8 +1,9 @@
 package edu.upc.dsa.mysql;
 
-import edu.upc.dsa.mysql.ObjectHelper;
-import edu.upc.dsa.mysql.QueryHelper;
-
+import edu.upc.dsa.models.User;
+import edu.upc.dsa.util.ObjectHelper;
+import edu.upc.dsa.util.QueryHelper;
+import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -41,7 +42,11 @@ public class SessionImpl implements Session {
     }
 
     public void close() {
-
+        try {
+            this.conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public Object get(Class theClass, int ID) {
@@ -54,6 +59,34 @@ public class SessionImpl implements Session {
 
     public void delete(Object object) {
 
+    }
+
+    @Override
+    public boolean isUserRegistered(Class class1,User user) {
+        String selectQuery = QueryHelper.createQueryUserExists(class1);
+
+        ResultSet rs;
+        PreparedStatement pstm;
+
+        boolean empty = true;
+
+        try {
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setObject(1, user.getUsername());
+            rs = pstm.executeQuery();
+
+            while(rs.next()) {
+                empty = false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if(empty == true)
+            return false;
+        else
+            return true;
     }
 
     public List<Object> findAll(Class theClass) {

@@ -3,7 +3,7 @@ package edu.upc.dsa.services;
 
 import edu.upc.dsa.UserManager;
 import edu.upc.dsa.UserManagerImpl;
-
+import edu.upc.dsa.mysql.UserManagerDAO;
 import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.LogInParams;
 import edu.upc.dsa.models.User;
@@ -23,12 +23,14 @@ import java.util.List;
 public class UserService {
 
     private UserManager um;
+    private UserManagerDAO umd;
 
     public UserService() {
         this.um = UserManagerImpl.getInstance();
         if(um.getUsers().size()==0){
             um.addUser(new User("admin","admin@admin","admin"));
         }
+        this.um = UserManagerImpl.getInstance();
     }
 
 /*
@@ -98,6 +100,7 @@ public class UserService {
         }
 
         User checking = this.um.addUser(user);
+        this.umd.addUser(user);
         if (checking != null)
         {
             return Response.status(201).entity(user).build();
