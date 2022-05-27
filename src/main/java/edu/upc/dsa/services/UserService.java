@@ -7,6 +7,7 @@ import edu.upc.dsa.mysql.UserManagerDAO;
 import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.LogInParams;
 import edu.upc.dsa.models.User;
+import edu.upc.dsa.mysql.UserManagerDAOImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -27,10 +28,11 @@ public class UserService {
 
     public UserService() {
         this.um = UserManagerImpl.getInstance();
+        this.umd = UserManagerDAOImpl.getInstance();
         if(um.getUsers().size()==0){
             um.addUser(new User("admin","admin@admin","admin"));
         }
-        this.um = UserManagerImpl.getInstance();
+
     }
 
 /*

@@ -74,7 +74,6 @@ public class SessionImpl implements Session {
             pstm = conn.prepareStatement(selectQuery);
             pstm.setObject(1, user.getUsername());
             rs = pstm.executeQuery();
-
             while(rs.next()) {
                 empty = false;
             }
