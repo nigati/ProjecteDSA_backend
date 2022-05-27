@@ -8,7 +8,9 @@ import java.util.List;
 public interface Session<E> {
     void save(Object entity);
     void close();
-    Object get(Class theClass, int ID);
+    Object get(Class theClass, String key, Object value);
+
+    Object getS(Class theClass, String name);
     void update(Object object);
     void delete(Object object);
     boolean isUserRegistered(Class class1, User user);

@@ -26,10 +26,12 @@ public class QueryHelper {
         return sb.toString();
     }
 
-    public static String createQuerySELECT(Object entity) {
+    public static String createQuerySELECT(Object entity, String Where) {
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT * FROM ").append(entity.getClass().getSimpleName());
-        sb.append(" WHERE ID = ?");
+        sb.append(" WHERE ");
+        sb.append(Where);
+        sb.append(" = ?");
 
         return sb.toString();
     }

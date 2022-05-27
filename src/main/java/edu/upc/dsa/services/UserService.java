@@ -3,6 +3,7 @@ package edu.upc.dsa.services;
 
 import edu.upc.dsa.UserManager;
 import edu.upc.dsa.UserManagerImpl;
+import edu.upc.dsa.models.Track;
 import edu.upc.dsa.mysql.UserManagerDAO;
 import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.LogInParams;
@@ -153,6 +154,23 @@ public class UserService {
                 return Response.status(401).build();
 
             }
+    }
+
+    @PUT
+    @ApiOperation(value = "update a User", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "Track not found")
+    })
+    @Path("/{username}")
+    public Response updateUser(String username) {
+
+        User user=umd.getUser(username);
+        User u = this.umd.updateUser(user.getUsername(),user.getEmail(), user.getPassword());
+
+        if (u == null) return Response.status(404).build();
+
+        return Response.status(201).build();
     }
 
 

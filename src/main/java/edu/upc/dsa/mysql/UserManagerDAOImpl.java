@@ -36,9 +36,10 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         List<Item> items;
         try{
             session = FactorySession.openSession();
-            boolean alreadyreg =session.isUserRegistered(User.class, user);
+            session.save(user);
+            /*boolean alreadyreg =session.isUserRegistered(User.class, user);
             if (!alreadyreg){session.save(user);}
-            else {logger.warn("User is already registered");}
+            else {logger.warn("User is already registered");}*/
 
         }
         catch (Exception e){
@@ -52,11 +53,26 @@ public class UserManagerDAOImpl implements UserManagerDAO {
 
     @Override
     public User getUser(String username) {
-        return null;
+
+        Session session = null;
+        User user1 = null;
+        try {
+            session = FactorySession.openSession();
+            user1 = (User)session.get(User.class, "USERNAME", "claudia");
+        }
+        catch (Exception e) {
+            // LOG
+        }
+        finally {
+            session.close();
+        }
+
+        return user1;
+
     }
 
     @Override
-    public void updateUser(String name, String email, String password) {
+    public User updateUser(String name, String email, String password) { return null;
 
     }
 

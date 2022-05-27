@@ -3,10 +3,8 @@ package edu.upc.dsa.mysql;
 import edu.upc.dsa.models.User;
 import edu.upc.dsa.util.ObjectHelper;
 import edu.upc.dsa.util.QueryHelper;
-import java.sql.ResultSet;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,7 +47,46 @@ public class SessionImpl implements Session {
         }
     }
 
-    public Object get(Class theClass, int ID) {
+    public Object get(Class theClass, String key, Object value) {
+
+        String selectQuery =  QueryHelper.createQuerySELECT(theClass, key);
+        // "Select * from User WHERE username = ?"
+
+        ResultSet rs;
+        PreparedStatement pstm;
+
+        boolean empty = true;
+
+        try {
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setObject(1, value); //son los ?
+            rs = pstm.executeQuery();
+            rs.next();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int numberOfColumns = rsmd.getColumnCount();
+
+            Object o = theClass.newInstance();
+            int i=1;
+            while (i<=numberOfColumns)
+            {
+                ObjectHelper.setter(o, rsmd.getColumnName(i), rs.getObject(i));
+                i++;
+            }
+            return o;
+
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    public Object getS(Class theClass, String username) {
         return null;
     }
 
