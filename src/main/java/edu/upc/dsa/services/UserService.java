@@ -160,7 +160,7 @@ public class UserService {
     @ApiOperation(value = "update a User", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
-            @ApiResponse(code = 404, message = "Track not found")
+            @ApiResponse(code = 404, message = "User not found")
     })
     @Path("/{username}")
     public Response updateUser(String username) {
@@ -169,6 +169,21 @@ public class UserService {
         User u = this.umd.updateUser(user.getUsername(),user.getEmail(), user.getPassword());
 
         if (u == null) return Response.status(404).build();
+
+        return Response.status(201).build();
+    }
+
+    @GET
+    @ApiOperation(value = "get a User", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    @Path("/getUser/{username}")
+    public Response getUser(String username) {
+
+        User user=umd.getUser(username);
+        if (user == null) return Response.status(404).build();
 
         return Response.status(201).build();
     }
