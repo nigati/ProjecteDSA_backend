@@ -60,6 +60,28 @@ public class SessionImpl implements Session {
     public void delete(Object object) {
 
     }
+    public void saveUser(Object entity) {
+
+        String insertQuery = QueryHelper.createQueryINSERT_Encrypted(entity);
+
+        PreparedStatement pstm = null;
+
+        try {
+            pstm = conn.prepareStatement(insertQuery);
+            pstm.setObject(1, 0);
+            int i = 2;
+
+            for (String field: ObjectHelper.getFields(entity)) {
+                pstm.setObject(i++, ObjectHelper.getter(entity, field));
+            }
+
+            pstm.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     @Override
     public boolean isUserRegistered(Class class1,User user) {

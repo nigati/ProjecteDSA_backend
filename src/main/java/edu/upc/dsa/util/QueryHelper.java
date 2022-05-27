@@ -7,18 +7,25 @@ public class QueryHelper {
         StringBuffer sb = new StringBuffer("INSERT INTO ");
         sb.append(entity.getClass().getSimpleName()).append(" ");
         sb.append("(");
-
+        Integer passwordPos = null;
         String [] fields = ObjectHelper.getFields(entity);
 
         sb.append("ID");
-        for (String field: fields) {
-            sb.append(", ").append(field);
+        for (int i=0;i<fields.length;i++) {
+            if (fields[i].equals("password")){
+                passwordPos= i;
+            }
+            sb.append(", ").append(fields[i]);
         }
 
         sb.append(") VALUES (?");
 
-        for (String field: fields) {
-            sb.append(", ?");
+        for (int i = 0; i< fields.length ;i++){
+            if(passwordPos!=null && passwordPos == i){
+                sb.append(", MD5(?)");
+            }else {
+                sb.append(", ?");
+            }
         }
 
         sb.append(")");
@@ -38,4 +45,36 @@ public class QueryHelper {
         sb.append(class1.getSimpleName()).append(" ");
         return sb.toString();
     }
+    public static String createQueryINSERT_Encrypted(Object entity) {
+
+        StringBuffer sb = new StringBuffer("INSERT INTO ");
+        sb.append(entity.getClass().getSimpleName()).append(" ");
+        sb.append("(");
+
+        String [] fields = ObjectHelper.getFields(entity);
+
+        sb.append(fields[0]);
+        Integer passwordPos = null;
+        for (int i = 1; i< fields.length ;i++){
+            if(fields[i].equals("password"))
+                passwordPos = i;
+            sb.append(", ").append(fields[i]);
+
+        }
+
+        sb.append(") VALUES (?");
+
+        for (int i = 1; i< fields.length ;i++){
+            if(passwordPos!=null && passwordPos == i){
+                sb.append(", MD5(?)");
+            }else {
+                sb.append(", ?");
+            }
+        }
+
+        sb.append(")");
+
+        return sb.toString();
+    }
+
 }

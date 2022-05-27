@@ -37,8 +37,9 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         try{
             session = FactorySession.openSession();
             boolean alreadyreg =session.isUserRegistered(User.class, user);
-            if (!alreadyreg){session.save(user);}
-            else {logger.warn("User is already registered");}
+            session.save(user);
+            //if (!alreadyreg){session.save(user);}
+            //else {logger.warn("User is already registered");}
 
         }
         catch (Exception e){
@@ -65,10 +66,9 @@ public class UserManagerDAOImpl implements UserManagerDAO {
 
     }
 
-    public User login(LogInParams logInParams) {
+    public void login(LogInParams logInParams) {
        Session session = null;
 
-        return null;
     }
     public void logOut (String username){
 
