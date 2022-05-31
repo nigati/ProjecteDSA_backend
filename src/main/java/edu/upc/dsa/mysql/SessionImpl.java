@@ -88,9 +88,7 @@ public class SessionImpl implements Session {
         return null;
     }
 
-    public Object getS(Class theClass, String username) {
-        return null;
-    }
+
 
     public void update(Object object) {
 
