@@ -179,13 +179,14 @@ public class UserService {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/getUser/{username}")
-    public Response getUser(String username) {
+    @Path("/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUser(@PathParam("username")String username) {
 
         User user=umd.getUser(username);
         if (user == null) return Response.status(404).build();
+        return Response.status(201).entity(user).build();
 
-        return Response.status(201).build();
     }
 
 
