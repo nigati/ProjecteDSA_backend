@@ -143,7 +143,7 @@ public class UserService {
     public Response logIn(LogInParams loginpar) {
 
         //System.out.println("PARAMETROS "+loginpar.getUsername()+" ===> "+loginpar.getPassword());
-            User u = this.um.login(loginpar.getUsername(), loginpar.getPassword());
+            User u = this.umd.login(loginpar);
 
             if (u!= null) {
                 return Response.status(201).entity(u).build();
