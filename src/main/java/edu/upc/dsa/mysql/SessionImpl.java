@@ -6,6 +6,7 @@ import edu.upc.dsa.util.QueryHelper;
 
 import java.sql.*;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -63,6 +64,7 @@ public class SessionImpl implements Session {
             rs = pstm.executeQuery();
             rs.next();
             ResultSetMetaData rsmd = rs.getMetaData();
+
             int numberOfColumns = rsmd.getColumnCount();
 
             Object o = theClass.newInstance();
@@ -86,15 +88,35 @@ public class SessionImpl implements Session {
         return null;
     }
 
-    public Object getS(Class theClass, String username) {
-        return null;
-    }
+
 
     public void update(Object object) {
 
     }
 
     public void delete(Object object) {
+
+    }
+    public void saveUser(Object entity) {
+
+        String insertQuery = QueryHelper.createQueryINSERT_Encrypted(entity);
+
+        PreparedStatement pstm = null;
+
+        try {
+            pstm = conn.prepareStatement(insertQuery);
+            pstm.setObject(1, 0);
+            int i = 2;
+
+            for (String field: ObjectHelper.getFields(entity)) {
+                pstm.setObject(i++, ObjectHelper.getter(entity, field));
+            }
+
+            pstm.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -130,6 +152,49 @@ public class SessionImpl implements Session {
     }
 
     public List<Object> findAll(Class theClass, HashMap params) {
+        String query = QueryHelper.createQuerySelectWithP(theClass, params);
+        PreparedStatement pstm = null;
+
+        try {
+            pstm = conn.prepareStatement(query);
+
+
+            int i = 1;
+            for(Object v : params.values()){
+                pstm.setObject(i++, v);
+            }
+
+
+            pstm.executeQuery();
+
+            ResultSet rs = pstm.getResultSet();
+
+            ResultSetMetaData metadata = rs.getMetaData();
+            int numberOfColumns = metadata.getColumnCount();
+            List<Object> l = new LinkedList<>();
+
+
+            while (rs.next()){
+                Object o = theClass.newInstance();
+                for (int j=1; j<=numberOfColumns; j++){
+                    String columnName = metadata.getColumnName(j);
+                    ObjectHelper.setter(o, columnName, rs.getObject(j));
+                }
+                l.add(o);
+            }
+
+
+            return l;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+
         return null;
     }
 
