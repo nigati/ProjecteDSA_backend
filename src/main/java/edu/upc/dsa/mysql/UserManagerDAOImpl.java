@@ -93,7 +93,7 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         if(l.size()==1){
             logger.info("Correct login "+logInParams.getUsername());
             User u = (User) l.get(0);
-            session.update(u); //futuro
+            //session.update(u); //futuro
             return u;
         }else if(l.size()>1){
             logger.warn("Duplicated user");

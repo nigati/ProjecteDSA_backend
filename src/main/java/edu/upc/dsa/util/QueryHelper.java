@@ -44,6 +44,19 @@ public class QueryHelper {
 
         return sb.toString();
     }
+
+    public static String createQueryUPDATE(Object entity, String SET, String Where) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("UPDATE ").append(entity.getClass().getSimpleName());
+        sb.append(" SET ").append(SET);
+        sb.append(" = ? ");
+        sb.append(" WHERE ");
+        sb.append(Where);
+        sb.append(" = ?");
+
+        return sb.toString();
+    }
+
     public static String createQuerySelectWithP (Class clase, HashMap<String, Object> parameters){
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT * FROM ").append(clase.getSimpleName());
