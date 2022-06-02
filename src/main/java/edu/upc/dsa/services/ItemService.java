@@ -1,9 +1,10 @@
 package edu.upc.dsa.services;
 
-
 import edu.upc.dsa.UserManager;
 import edu.upc.dsa.UserManagerImpl;
 import edu.upc.dsa.models.Track;
+import edu.upc.dsa.mysql.ItemManagerDAO;
+import edu.upc.dsa.mysql.ItemManagerDAOImpl;
 import edu.upc.dsa.mysql.UserManagerDAO;
 import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.LogInParams;
@@ -20,39 +21,34 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Api(value = "/users", description = "Endpoint to user Service")
-@Path("/users")
-public class UserService {
+@Api(value = "/items", description = "Endpoint to item Service")
+@Path("/items")
+public class ItemService {
 
-    private UserManager um;
-    private UserManagerDAO umd;
+    private ItemManagerDAO imd;
 
-    public UserService() {
-        this.um = UserManagerImpl.getInstance();
-        this.umd = UserManagerDAOImpl.getInstance();
-        if(um.getUsers().size()==0){
-            um.addUser(new User("admin","admin@admin","admin"));
-        }
+    public ItemService() {
+        this.imd = ItemManagerDAOImpl.getInstance();
 
     }
 
-/*
+
     @GET
-    @ApiOperation(value = "get all Track", notes = "asdasd")
+    @ApiOperation(value = "get all items", notes = "ojala funcione")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Track.class, responseContainer="List"),
+            @ApiResponse(code = 201, message = "Successful", response = Item.class, responseContainer="List"),
     })
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTracks() {
 
-        List<Track> tracks = this.tm.findAll();
+        List<Item> items = this.imd.getAll();
 
-        GenericEntity<List<Track>> entity = new GenericEntity<List<Track>>(tracks) {};
+        GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
         return Response.status(201).entity(entity).build()  ;
 
     }
-
+/*
     @DELETE
     @ApiOperation(value = "delete a Track", notes = "asdasd")
     @ApiResponses(value = {
@@ -83,7 +79,7 @@ public class UserService {
         return Response.status(201).build();
     }
 
-*/
+
 
     @POST
     @ApiOperation(value = "create a new user", notes = "xd")
@@ -143,17 +139,17 @@ public class UserService {
     public Response logIn(LogInParams loginpar) {
 
         //System.out.println("PARAMETROS "+loginpar.getUsername()+" ===> "+loginpar.getPassword());
-            User u = this.umd.login(loginpar);
+        User u = this.umd.login(loginpar);
 
-            if (u!= null) {
-                return Response.status(201).entity(u).build();
-            }
-            else {
+        if (u!= null) {
+            return Response.status(201).entity(u).build();
+        }
+        else {
 
-                //System.out.println("Usuario o contraseña incorrectos");
-                return Response.status(401).build();
+            //System.out.println("Usuario o contraseña incorrectos");
+            return Response.status(401).build();
 
-            }
+        }
     }
 
     @PUT
@@ -186,9 +182,9 @@ public class UserService {
         User user=umd.getUser(username);
         if (user == null) return Response.status(404).build();
         return Response.status(201).entity(user).build();
-
+*/
     }
 
 
 
-}
+

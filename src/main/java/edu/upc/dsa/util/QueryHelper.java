@@ -21,7 +21,6 @@ public class QueryHelper {
         }
 
         sb.append(") VALUES (?");
-
         for (int i = 0; i< fields.length ;i++){
             if(passwordPos!=null && passwordPos == i){
                 sb.append(", MD5(?)");
@@ -35,15 +34,16 @@ public class QueryHelper {
         return sb.toString();
     }
 
-    public static String createQuerySELECT(Object entity, String Where) {
+    public static String createQuerySELECT(Class clase, String Where) {
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT * FROM ").append(entity.getClass().getSimpleName());
+        sb.append("SELECT * FROM ").append(clase.getSimpleName());
         sb.append(" WHERE ");
         sb.append(Where);
         sb.append(" = ?");
 
         return sb.toString();
     }
+
 
     public static String createQueryUPDATE(Object entity, String SET, String Where) {
         StringBuffer sb = new StringBuffer();
@@ -54,6 +54,12 @@ public class QueryHelper {
         sb.append(Where);
         sb.append(" = ?");
 
+        return sb.toString();
+    }
+
+    public static String createQuerySELECTAll(Class clase){
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT * FROM ").append(clase.getSimpleName());
         return sb.toString();
     }
 
