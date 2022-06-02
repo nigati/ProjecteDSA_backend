@@ -75,8 +75,8 @@ public class UserManagerDAOImpl implements UserManagerDAO {
     }
 
     @Override
-    public User updateUser(String name, String email, String password) { return null;
-
+    public User updateUser(String name, String email, String password) {
+        return null;
     }
 
     @Override
