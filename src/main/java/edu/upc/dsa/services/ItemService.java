@@ -32,23 +32,23 @@ public class ItemService {
 
     }
 
-/*
+
     @GET
-    @ApiOperation(value = "get all Track", notes = "asdasd")
+    @ApiOperation(value = "get all items", notes = "ojala funcione")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Track.class, responseContainer="List"),
+            @ApiResponse(code = 201, message = "Successful", response = Item.class, responseContainer="List"),
     })
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTracks() {
 
-        List<Track> tracks = this.tm.findAll();
+        List<Item> items = this.imd.getAll();
 
-        GenericEntity<List<Track>> entity = new GenericEntity<List<Track>>(tracks) {};
+        GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
         return Response.status(201).entity(entity).build()  ;
 
     }
-
+/*
     @DELETE
     @ApiOperation(value = "delete a Track", notes = "asdasd")
     @ApiResponses(value = {

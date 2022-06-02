@@ -43,6 +43,11 @@ public class QueryHelper {
 
         return sb.toString();
     }
+    public static String createQuerySELECTAll(Class clase){
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT * FROM ").append(clase.getSimpleName());
+        return sb.toString();
+    }
     public static String createQuerySelectWithP (Class clase, HashMap<String, Object> parameters){
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT * FROM ").append(clase.getSimpleName());
