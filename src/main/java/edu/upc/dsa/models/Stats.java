@@ -12,4 +12,58 @@ public class Stats {
         this.enemiesKilled = 0;
         this.level = 0;
     }
+
+    public Stats(){
+
+    }
+
+    public Stats (String username, int points)
+    {
+        this.username=username;
+        this.points=points;
+        this.enemiesKilled=0;
+        this.level=0;
+    }
+
+    public int getPoints()
+    {
+        return points;
+    }
+
+    public void setPoints(int Points)
+    {
+        this.points=Points;
+    }
+
+    public String getUsername()
+    {
+        return username;
+    }
+
+    public void setUsername(String username){
+        this.username=username;
+    }
+
+    public int getEnemiesKilled()
+    {
+        return enemiesKilled;
+    }
+
+    public void setEnemiesKilled(int enemiesKilled)
+    {
+        this.enemiesKilled=enemiesKilled;
+    }
+
+    public int getLevel()
+    {
+        return level;
+    }
+
+    public void setLevel(int level)
+    {
+        this.level=level;
+    }
+
+
+
 }
