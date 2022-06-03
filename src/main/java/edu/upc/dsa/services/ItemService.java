@@ -1,9 +1,10 @@
 package edu.upc.dsa.services;
 
-
 import edu.upc.dsa.UserManager;
 import edu.upc.dsa.UserManagerImpl;
 import edu.upc.dsa.models.Track;
+import edu.upc.dsa.mysql.ItemManagerDAO;
+import edu.upc.dsa.mysql.ItemManagerDAOImpl;
 import edu.upc.dsa.mysql.UserManagerDAO;
 import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.LogInParams;
@@ -20,21 +21,64 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Api(value = "/users", description = "Endpoint to user Service")
-@Path("/users")
-public class UserService {
+@Api(value = "/items", description = "Endpoint to item Service")
+@Path("/items")
+public class ItemService {
 
-    private UserManager um;
-    private UserManagerDAO umd;
+    private ItemManagerDAO imd;
 
-    public UserService() {
-        this.um = UserManagerImpl.getInstance();
-        this.umd = UserManagerDAOImpl.getInstance();
-        if(um.getUsers().size()==0){
-            um.addUser(new User("admin","admin@admin","admin"));
-        }
+    public ItemService() {
+        this.imd = ItemManagerDAOImpl.getInstance();
 
     }
+
+
+    @GET
+    @ApiOperation(value = "get all items", notes = "ojala funcione")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Item.class, responseContainer="List"),
+    })
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTracks() {
+
+        List<Item> items = this.imd.getAll();
+
+        GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
+        return Response.status(201).entity(entity).build()  ;
+
+    }
+/*
+    @DELETE
+    @ApiOperation(value = "delete a Track", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "Track not found")
+    })
+    @Path("/{id}")
+    public Response deleteTrack(@PathParam("id") String id) {
+        Track t = this.tm.getTrack(id);
+        if (t == null) return Response.status(404).build();
+        else this.tm.deleteTrack(id);
+        return Response.status(201).build();
+    }
+
+    @PUT
+    @ApiOperation(value = "update a Track", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "Track not found")
+    })
+    @Path("/")
+    public Response updateTrack(Track track) {
+
+        Track t = this.tm.updateTrack(track);
+
+        if (t == null) return Response.status(404).build();
+
+        return Response.status(201).build();
+    }
+
 
 
     @POST
@@ -78,7 +122,7 @@ public class UserService {
         List<Item> items = this.um.catalogoTienda();
 
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
-        return Response.status(201).entity(entity).build();
+        return Response.status(201).entity(entity).build()  ;
 
     }
 
@@ -95,17 +139,17 @@ public class UserService {
     public Response logIn(LogInParams loginpar) {
 
         //System.out.println("PARAMETROS "+loginpar.getUsername()+" ===> "+loginpar.getPassword());
-            User u = this.umd.login(loginpar);
+        User u = this.umd.login(loginpar);
 
-            if (u!= null) {
-                return Response.status(201).entity(u).build();
-            }
-            else {
+        if (u!= null) {
+            return Response.status(201).entity(u).build();
+        }
+        else {
 
-                //System.out.println("Usuario o contraseña incorrectos");
-                return Response.status(401).build();
+            //System.out.println("Usuario o contraseña incorrectos");
+            return Response.status(401).build();
 
-            }
+        }
     }
 
     @PUT
@@ -138,9 +182,9 @@ public class UserService {
         User user=umd.getUser(username);
         if (user == null) return Response.status(404).build();
         return Response.status(201).entity(user).build();
-
+*/
     }
 
 
 
-}
+
