@@ -110,10 +110,10 @@ public class UserService {
     public Response logIn(LogInParams loginpar) {
 
         //System.out.println("PARAMETROS "+loginpar.getUsername()+" ===> "+loginpar.getPassword());
-            //User u = this.umd.login(loginpar);
-            User u2 = this.um.login(loginpar.getUsername(),loginpar.getPassword());
-            if (u2!= null) {
-                return Response.status(201).entity(u2).build();
+            User u = this.umd.login(loginpar);
+            //User u2 = this.um.login(loginpar.getUsername(),loginpar.getPassword());
+            if (u!= null) {
+                return Response.status(201).entity(u).build();
             }
             else {
 
