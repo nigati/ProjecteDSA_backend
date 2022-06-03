@@ -3,16 +3,14 @@ package edu.upc.dsa.services;
 
 import edu.upc.dsa.UserManager;
 import edu.upc.dsa.UserManagerImpl;
-import edu.upc.dsa.models.Track;
+import edu.upc.dsa.models.*;
 import edu.upc.dsa.mysql.UserManagerDAO;
-import edu.upc.dsa.models.Item;
-import edu.upc.dsa.models.LogInParams;
-import edu.upc.dsa.models.User;
 import edu.upc.dsa.mysql.UserManagerDAOImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.log4j.Logger;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
@@ -81,6 +79,19 @@ public class UserService {
         return Response.status(201).entity(entity).build();
 
     }
+    @POST
+    @ApiOperation(value="Retrieve issues", notes = "minim2")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful")
+    })
+
+    @Path("/issue")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response issues(Issue issue){
+        System.out.println("issue date: " + issue.getDate() + "; Informer: " + issue.getInformer() + "; Message: " + issue.getMessage());
+        return Response.status(201).build();
+    }
+
 
     @POST
     @ApiOperation(value = "log in user", notes = "xd")
@@ -95,10 +106,10 @@ public class UserService {
     public Response logIn(LogInParams loginpar) {
 
         //System.out.println("PARAMETROS "+loginpar.getUsername()+" ===> "+loginpar.getPassword());
-            User u = this.umd.login(loginpar);
-
-            if (u!= null) {
-                return Response.status(201).entity(u).build();
+            //User u = this.umd.login(loginpar);
+            User u2 = this.um.login(loginpar.getUsername(),loginpar.getPassword());
+            if (u2!= null) {
+                return Response.status(201).entity(u2).build();
             }
             else {
 
