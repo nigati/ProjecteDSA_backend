@@ -43,6 +43,11 @@ public class UserManagerImpl implements UserManager {
             this.hmUsers.put(user.getUsername(), user);
             logger.info("new User added");
 
+            for (User u:users){
+                logger.info(u.getUsername());
+                logger.info(u.getPassword());
+                logger.info(u.getEmail());
+        }
             return user;
         } else //si ya tenemos un usuario registrado, retornamos null
         {

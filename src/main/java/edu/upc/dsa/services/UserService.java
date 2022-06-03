@@ -3,10 +3,11 @@ package edu.upc.dsa.services;
 
 import edu.upc.dsa.UserManager;
 import edu.upc.dsa.UserManagerImpl;
-
+import edu.upc.dsa.mysql.UserManagerDAO;
 import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.LogInParams;
 import edu.upc.dsa.models.User;
+import edu.upc.dsa.mysql.UserManagerDAOImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -23,10 +24,15 @@ import java.util.List;
 public class UserService {
 
     private UserManager um;
+    private UserManagerDAO umd;
 
     public UserService() {
         this.um = UserManagerImpl.getInstance();
-        um.addUser(new User("admin","admin@admin","admin"));
+        this.umd = UserManagerDAOImpl.getInstance();
+        if(um.getUsers().size()==0){
+            um.addUser(new User("admin","admin@admin","admin"));
+        }
+
     }
 
 
@@ -48,6 +54,7 @@ public class UserService {
         }
 
         User checking = this.um.addUser(user);
+        this.umd.addUser(user);
         if (checking != null)
         {
             return Response.status(201).entity(user).build();
@@ -70,7 +77,7 @@ public class UserService {
         List<Item> items = this.um.catalogoTienda();
 
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
-        return Response.status(201).entity(entity).build()  ;
+        return Response.status(201).entity(entity).build();
 
     }
 
@@ -78,7 +85,7 @@ public class UserService {
     @ApiOperation(value = "log in user", notes = "xd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response= User.class),
-            @ApiResponse(code = 404, message = "Incorrect username or password")
+            @ApiResponse(code = 401, message = "Incorrect username or password")
 
     })
 
@@ -95,7 +102,7 @@ public class UserService {
             else {
 
                 //System.out.println("Usuario o contraseña incorrectos");
-                return Response.status(404).build();
+                return Response.status(401).build();
 
             }
     }

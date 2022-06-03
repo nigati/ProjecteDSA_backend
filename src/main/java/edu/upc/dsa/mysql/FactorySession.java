@@ -22,8 +22,8 @@ public class FactorySession {
         Connection conn = null;
         try {
             conn =
-                    DriverManager.getConnection("jdbc:mysql://localhost/test?" +
-                            "user=minty&password=greatsqldb");
+                    DriverManager.getConnection("jdbc:mariadb://localhost:3306/thebindingofgilbert",
+                            "root","admin");
 
         } catch (SQLException ex) {
             // handle any errors

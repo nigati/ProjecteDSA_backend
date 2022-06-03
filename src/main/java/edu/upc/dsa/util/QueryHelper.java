@@ -1,4 +1,4 @@
-package edu.upc.dsa.mysql;
+package edu.upc.dsa.util;
 
 public class QueryHelper {
 
@@ -33,5 +33,9 @@ public class QueryHelper {
 
         return sb.toString();
     }
-
+    public static String createQueryUserExists(Class class1){
+        StringBuffer sb = new StringBuffer("SELECT ID FROM ");
+        sb.append(class1.getSimpleName()).append(" ");
+        return sb.toString();
+    }
 }
