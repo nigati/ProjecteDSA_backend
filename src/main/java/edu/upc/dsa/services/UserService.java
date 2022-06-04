@@ -1,13 +1,12 @@
 package edu.upc.dsa.services;
 
 
+import edu.upc.dsa.StatsManager;
+import edu.upc.dsa.StatsManagerImpl;
 import edu.upc.dsa.UserManager;
 import edu.upc.dsa.UserManagerImpl;
-import edu.upc.dsa.models.Track;
+import edu.upc.dsa.models.*;
 import edu.upc.dsa.mysql.UserManagerDAO;
-import edu.upc.dsa.models.Item;
-import edu.upc.dsa.models.LogInParams;
-import edu.upc.dsa.models.User;
 import edu.upc.dsa.mysql.UserManagerDAOImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +25,7 @@ public class UserService {
 
     private UserManager um;
     private UserManagerDAO umd;
+    private StatsManager sm;
 
     public UserService() {
         this.um = UserManagerImpl.getInstance();
@@ -33,6 +33,7 @@ public class UserService {
         if(um.getUsers().size()==0){
             um.addUser(new User("admin","admin@admin","admin"));
         }
+        this.sm = StatsManagerImpl.getInstance();
 
     }
 
@@ -188,6 +189,8 @@ public class UserService {
         return Response.status(201).entity(user).build();
 
     }
+
+
 
 
 
