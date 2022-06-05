@@ -1,21 +1,16 @@
 package edu.upc.dsa.services;
 
-import edu.upc.dsa.UserManager;
-import edu.upc.dsa.UserManagerImpl;
-import edu.upc.dsa.models.Track;
+import edu.upc.dsa.models.Item;
 import edu.upc.dsa.mysql.ItemManagerDAO;
 import edu.upc.dsa.mysql.ItemManagerDAOImpl;
-import edu.upc.dsa.mysql.UserManagerDAO;
-import edu.upc.dsa.models.Item;
-import edu.upc.dsa.models.LogInParams;
-import edu.upc.dsa.models.User;
-import edu.upc.dsa.mysql.UserManagerDAOImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
