@@ -162,13 +162,14 @@ public class UserService {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found")
     })
+
     @Path("/{username}")
     public Response updateUser(String username) {
 
-        User user=umd.getUser(username);
-        User u = this.umd.updateUser(user.getUsername(),user.getEmail(), user.getPassword());
+       // User user=umd.getUser(username);
+        //User u = this.umd.updateUser(user.getUsername(),user.getEmail(), user.getPassword());
 
-        if (u == null) return Response.status(404).build();
+       // if (u == null) return Response.status(404).build();
 
         return Response.status(201).build();
     }
