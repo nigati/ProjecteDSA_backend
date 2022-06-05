@@ -36,9 +36,9 @@ public class StatsManagerImpl implements StatsManager{
 
     public List<Stats> getRanking()
     {
-        stats.add(new Stats("claudia",10));
-        stats.add(new Stats("barto",23));
-        stats.add(new Stats("nico",8));
+        stats.add(new Stats("claudia",10,"https://www.nationalgeographic.com.es/medio/2018/02/27/playa-de-isuntza-lekeitio__1280x720.jpg"));
+        stats.add(new Stats("barto",23,"https://t1.ea.ltmcdn.com/es/posts/7/1/5/los_35_animales_mas_tiernos_del_mundo_24517_orig.jpg"));
+        stats.add(new Stats("nico",8,"https://cdn.pixabay.com/photo/2017/07/11/15/51/kermit-2493979_1280.png"));
 
         stats.sort(Comparator.comparingDouble(Stats::getPoints).reversed());
         logger.info("Estadisticas cargadas completamente");
