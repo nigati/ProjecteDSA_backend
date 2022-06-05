@@ -1,5 +1,6 @@
 package edu.upc.dsa.mysql;
 
+import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.LogInParams;
 import edu.upc.dsa.models.User;
 
@@ -13,4 +14,5 @@ public interface UserManagerDAO {
     public void deleteUser(int employeeID);
     public List<User> getUsers();
     //public List <User> getEmployeeByDept(int deptId);
+    public User buyItem (String i, String username);
 }

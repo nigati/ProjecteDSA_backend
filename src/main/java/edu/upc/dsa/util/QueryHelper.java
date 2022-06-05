@@ -54,6 +54,10 @@ public class QueryHelper {
         sb.append(Where);
         sb.append(" = ?");
 
+        //UPDATE personas
+        //SET apellido2 = 'RODRIGUEZ'
+        //WHERE nombre = 'ANTONIO'
+
         return sb.toString();
     }
 
@@ -81,6 +85,11 @@ public class QueryHelper {
 
         return sb.toString();
     }
+
+
+
+
+
     public static String createQueryUserExists(Class class1){
         StringBuffer sb = new StringBuffer("SELECT ID FROM ");
         sb.append(class1.getSimpleName()).append(" ");

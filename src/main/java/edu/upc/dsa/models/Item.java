@@ -3,16 +3,18 @@ package edu.upc.dsa.models;
 public class Item {
     String name;
     String description;
-    double coins;
+    int coins;
+    String urlPic;
 
     public Item() {
     }
 
-    public Item(String name, String description, double coins) {
+    public Item(String name, String description, int coins, String urlPic) {
         this();
         this.setName(name);
         this.setDescription(description);
         this.setCoins(coins);
+        this.setUrlPic(urlPic);
     }
 
     public String getName() {
@@ -32,11 +34,19 @@ public class Item {
         this.description = description;
     }
 
-    public double getCoins() {
+    public int getCoins() {
         return coins;
     }
 
-    public void setCoins(double coins) {
+    public void setCoins(int coins) {
         this.coins = coins;
+    }
+
+    public String getUrlPic() {
+        return this.urlPic;
+    }
+
+    public void setUrlPic(String urlPic) {
+        this.urlPic = urlPic;
     }
 }

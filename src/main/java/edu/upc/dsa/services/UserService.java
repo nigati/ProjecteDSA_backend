@@ -6,6 +6,7 @@ import edu.upc.dsa.StatsManagerImpl;
 import edu.upc.dsa.UserManager;
 import edu.upc.dsa.UserManagerImpl;
 import edu.upc.dsa.models.*;
+import edu.upc.dsa.mysql.ItemManagerDAO;
 import edu.upc.dsa.mysql.UserManagerDAO;
 import edu.upc.dsa.mysql.UserManagerDAOImpl;
 import io.swagger.annotations.Api;
@@ -26,6 +27,7 @@ public class UserService {
 
     private UserManager um;
     private UserManagerDAO umd;
+    private ItemManagerDAO imd;
     private StatsManager sm;
 
     public UserService() {
@@ -134,6 +136,24 @@ public class UserService {
 
         User user=umd.getUser(username);
         User u = this.umd.updateUser(user.getUsername(),user.getEmail(), user.getPassword());
+
+        if (u == null) return Response.status(404).build();
+
+        return Response.status(201).build();
+    }
+
+    @PUT
+    @ApiOperation(value = "buy Item from shop", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "Something went wrong")
+    })
+    @Path("/buyItem")
+    public Response buyItem(ToBuyItems toBuyItems) {
+
+        User user=umd.getUser(toBuyItems.getPlayer());
+        Item i =imd.getItem(toBuyItems.getItem());
+        User u= this.umd.buyItem(toBuyItems.getItem(),toBuyItems.getPlayer());
 
         if (u == null) return Response.status(404).build();
 

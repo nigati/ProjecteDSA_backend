@@ -21,8 +21,23 @@ public class ItemManagerDAOImpl implements ItemManagerDAO {
     }
 
     @Override
-    public Item getItem(String name) {
-        return null;
+    public Item getItem(String item) {
+
+        Session session = null;
+        Item item1 = null;
+        try {
+            session = FactorySession.openSession();
+            item1 = (Item) session.get(Item.class, "ITEM_NAME", item);
+        }
+        catch (Exception e) {
+            // LOG
+        }
+        finally {
+            session.close();
+        }
+
+        return item1;
+
     }
 
     @Override
