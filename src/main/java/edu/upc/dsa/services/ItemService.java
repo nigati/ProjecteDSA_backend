@@ -1,46 +1,79 @@
 package edu.upc.dsa.services;
 
-
-import edu.upc.dsa.StatsManager;
-import edu.upc.dsa.StatsManagerImpl;
-import edu.upc.dsa.UserManager;
-import edu.upc.dsa.UserManagerImpl;
-import edu.upc.dsa.models.*;
+import edu.upc.dsa.models.Item;
 import edu.upc.dsa.mysql.ItemManagerDAO;
 import edu.upc.dsa.mysql.ItemManagerDAOImpl;
-import edu.upc.dsa.mysql.UserManagerDAO;
-import edu.upc.dsa.mysql.UserManagerDAOImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.log4j.Logger;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Api(value = "/users", description = "Endpoint to user Service")
-@Path("/users")
-public class UserService {
+@Api(value = "/items", description = "Endpoint to item Service")
+@Path("/items")
+public class ItemService {
 
-    private UserManager um;
-    private UserManagerDAO umd;
     private ItemManagerDAO imd;
-    private StatsManager sm;
 
-    public UserService() {
-        this.um = UserManagerImpl.getInstance();
-        this.umd = UserManagerDAOImpl.getInstance();
+    public ItemService() {
         this.imd = ItemManagerDAOImpl.getInstance();
-        if(um.getUsers().size()==0){
-            um.addUser(new User("admin","admin@admin","admin"));
-        }
-        this.sm = StatsManagerImpl.getInstance();
 
     }
+
+
+    @GET
+    @ApiOperation(value = "get all items", notes = "ojala funcione")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Item.class, responseContainer="List"),
+    })
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTracks() {
+
+        List<Item> items = this.imd.getAll();
+
+        GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
+        return Response.status(201).entity(entity).build()  ;
+
+    }
+/*
+    @DELETE
+    @ApiOperation(value = "delete a Track", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "Track not found")
+    })
+    @Path("/{id}")
+    public Response deleteTrack(@PathParam("id") String id) {
+        Track t = this.tm.getTrack(id);
+        if (t == null) return Response.status(404).build();
+        else this.tm.deleteTrack(id);
+        return Response.status(201).build();
+    }
+
+    @PUT
+    @ApiOperation(value = "update a Track", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "Track not found")
+    })
+    @Path("/")
+    public Response updateTrack(Track track) {
+
+        Track t = this.tm.updateTrack(track);
+
+        if (t == null) return Response.status(404).build();
+
+        return Response.status(201).build();
+    }
+
 
 
     @POST
@@ -84,22 +117,9 @@ public class UserService {
         List<Item> items = this.um.catalogoTienda();
 
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
-        return Response.status(201).entity(entity).build();
+        return Response.status(201).entity(entity).build()  ;
 
     }
-    @POST
-    @ApiOperation(value="Retrieve issues", notes = "minim2")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful")
-    })
-
-    @Path("/issue")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response issues(Issue issue){
-        System.out.println("issue date: " + issue.getDate() + "; Informer: " + issue.getInformer() + "; Message: " + issue.getMessage());
-        return Response.status(201).build();
-    }
-
 
     @POST
     @ApiOperation(value = "log in user", notes = "xd")
@@ -114,17 +134,17 @@ public class UserService {
     public Response logIn(LogInParams loginpar) {
 
         //System.out.println("PARAMETROS "+loginpar.getUsername()+" ===> "+loginpar.getPassword());
-            User u = this.umd.login(loginpar);
-            //User u2 = this.um.login(loginpar.getUsername(),loginpar.getPassword());
-            if (u!= null) {
-                return Response.status(201).entity(u).build();
-            }
-            else {
+        User u = this.umd.login(loginpar);
 
-                //System.out.println("Usuario o contraseña incorrectos");
-                return Response.status(401).build();
+        if (u!= null) {
+            return Response.status(201).entity(u).build();
+        }
+        else {
 
-            }
+            //System.out.println("Usuario o contraseña incorrectos");
+            return Response.status(401).build();
+
+        }
     }
 
     @PUT
@@ -144,26 +164,6 @@ public class UserService {
         return Response.status(201).build();
     }
 
-    @PUT
-    @ApiOperation(value = "buy Item from shop", notes = "asdasd")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
-            @ApiResponse(code = 404, message = "Something went wrong")
-    })
-    @Path("/buyItem")
-    public Response buyItem(ToBuyItems toBuyItems) {
-
-        User user=umd.getUser(toBuyItems.getPlayer());
-        //System.out.println("Consigo al player: "+ user.getCoins());
-        Item i =imd.getItem(toBuyItems.getItem());
-        //System.out.println("Consigo al item: "+ i.getCoins());
-        User u= this.umd.buyItem(toBuyItems.getItem(),toBuyItems.getPlayer());
-
-        if (u == null) return Response.status(404).build();
-
-        return Response.status(201).build();
-    }
-
     @GET
     @ApiOperation(value = "get a User", notes = "asdasd")
     @ApiResponses(value = {
@@ -177,11 +177,9 @@ public class UserService {
         User user=umd.getUser(username);
         if (user == null) return Response.status(404).build();
         return Response.status(201).entity(user).build();
-
+*/
     }
 
 
 
 
-
-}
