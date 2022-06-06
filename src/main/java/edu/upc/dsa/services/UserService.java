@@ -147,21 +147,22 @@ public class UserService {
     @PUT
     @ApiOperation(value = "buy Item from shop", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 201, message = "Successful", response=User.class),
             @ApiResponse(code = 404, message = "Something went wrong")
     })
     @Path("/buyItem")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response buyItem(ToBuyItems toBuyItems) {
 
         User user=umd.getUser(toBuyItems.getPlayer());
         //System.out.println("Consigo al player: "+ user.getCoins());
         Item i =imd.getItem(toBuyItems.getItem());
-        //System.out.println("Consigo al item: "+ i.getCoins());
+        System.out.println("Consigo al item: "+ i.getCoins());
         User u= this.umd.buyItem(toBuyItems.getItem(),toBuyItems.getPlayer());
 
         if (u == null) return Response.status(404).build();
 
-        return Response.status(201).build();
+        return Response.status(201).entity(user).build();
     }
 
     @GET
