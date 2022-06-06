@@ -167,7 +167,7 @@ public class UserService {
     @GET
     @ApiOperation(value = "get a User", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 201, message = "Successful", response= User.class),
             @ApiResponse(code = 404, message = "User not found")
     })
     @Path("/{username}")
