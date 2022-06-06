@@ -6,6 +6,8 @@ public class Item {
     int coins;
     String urlPic;
 
+    int id;
+
     public Item() {
     }
 
@@ -48,5 +50,13 @@ public class Item {
 
     public void setUrlPic(String urlPic) {
         this.urlPic = urlPic;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

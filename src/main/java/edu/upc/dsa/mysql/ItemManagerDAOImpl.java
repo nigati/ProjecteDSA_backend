@@ -27,7 +27,8 @@ public class ItemManagerDAOImpl implements ItemManagerDAO {
         Item item1 = null;
         try {
             session = FactorySession.openSession();
-            item1 = (Item) session.get(Item.class, "ITEM_NAME", item);
+            item1 = (Item) session.get(Item.class, "NAME", item);
+            //logger.info("Get item hecho correctamente!");
         }
         catch (Exception e) {
             // LOG

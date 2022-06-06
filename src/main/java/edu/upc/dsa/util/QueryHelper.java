@@ -45,9 +45,9 @@ public class QueryHelper {
     }
 
 
-    public static String createQueryUPDATE(Object entity, String SET, String Where) {
+    public static String createQueryUPDATE(Class clase, String SET, String Where) {
         StringBuffer sb = new StringBuffer();
-        sb.append("UPDATE ").append(entity.getClass().getSimpleName());
+        sb.append("UPDATE ").append(clase.getSimpleName());
         sb.append(" SET ").append(SET);
         sb.append(" = ? ");
         sb.append(" WHERE ");

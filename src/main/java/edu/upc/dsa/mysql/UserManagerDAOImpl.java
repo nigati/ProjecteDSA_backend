@@ -130,9 +130,9 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         try {
             session = FactorySession.openSession();
             user0 = (User)session.get(User.class, "USERNAME",username);
-            i1 = (Item) session.get(Item.class, "ITEM_NAME", item);
+            i1 = (Item) session.get(Item.class, "NAME", item);
             int saldo= user0.getCoins()-i1.getCoins();
-            user1 = (User)session.update(User.class, "SET", String.valueOf(saldo),"USERNAME",username);
+            user1 = (User)session.update(User.class, "COINS", String.valueOf(saldo),"USERNAME",username);
 
         }
         catch (Exception e) {

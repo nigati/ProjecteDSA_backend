@@ -7,6 +7,7 @@ import edu.upc.dsa.UserManager;
 import edu.upc.dsa.UserManagerImpl;
 import edu.upc.dsa.models.*;
 import edu.upc.dsa.mysql.ItemManagerDAO;
+import edu.upc.dsa.mysql.ItemManagerDAOImpl;
 import edu.upc.dsa.mysql.UserManagerDAO;
 import edu.upc.dsa.mysql.UserManagerDAOImpl;
 import io.swagger.annotations.Api;
@@ -33,6 +34,7 @@ public class UserService {
     public UserService() {
         this.um = UserManagerImpl.getInstance();
         this.umd = UserManagerDAOImpl.getInstance();
+        this.imd = ItemManagerDAOImpl.getInstance();
         if(um.getUsers().size()==0){
             um.addUser(new User("admin","admin@admin","admin"));
         }
@@ -152,7 +154,9 @@ public class UserService {
     public Response buyItem(ToBuyItems toBuyItems) {
 
         User user=umd.getUser(toBuyItems.getPlayer());
+        //System.out.println("Consigo al player: "+ user.getCoins());
         Item i =imd.getItem(toBuyItems.getItem());
+        //System.out.println("Consigo al item: "+ i.getCoins());
         User u= this.umd.buyItem(toBuyItems.getItem(),toBuyItems.getPlayer());
 
         if (u == null) return Response.status(404).build();

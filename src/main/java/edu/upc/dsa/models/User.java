@@ -6,6 +6,7 @@ import java.util.List;
 public class User{
 
     private String username;
+    private int id;
     private String email;
     private String password;
     private int coins;
@@ -52,4 +53,7 @@ public class User{
     public void setInventario(List<Item> inventario) {
         this.inventario = inventario;
     }
+
+    public int getId() {return id;}
+    public void setId(int id) {this.id = id;}
 }
