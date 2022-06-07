@@ -62,17 +62,23 @@ public class SessionImpl implements Session {
             pstm = conn.prepareStatement(selectQuery);
             pstm.setObject(1, value); //son los ?
             rs = pstm.executeQuery();
-            rs.next();
+            //rs.next();
             ResultSetMetaData rsmd = rs.getMetaData();
 
             int numberOfColumns = rsmd.getColumnCount();
 
             Object o = theClass.newInstance();
-            int i=1;
+            /*int i=1;
             while (i<=numberOfColumns)
             {
                 ObjectHelper.setter(o, rsmd.getColumnName(i), rs.getObject(i));
                 i++;
+            }*/
+            while (rs.next()){
+                for (int i=1; i<=numberOfColumns; i++){
+                    String columnName = rsmd.getColumnName(i);
+                    ObjectHelper.setter(o, columnName, rs.getObject(i));
+                }
             }
             return o;
 
@@ -249,6 +255,42 @@ public class SessionImpl implements Session {
 
 
             return l;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+
+        return null;
+    }
+    public Object getByUsername(Class theClass, String username) {
+        String query = QueryHelper.createQuerySELECTbyUsername(theClass, username);
+        ResultSet rs;
+        try {
+            Statement st = conn.createStatement();
+            rs = st.executeQuery(query);
+            ResultSetMetaData metadata = rs.getMetaData();
+            int numberOfColumns = metadata.getColumnCount();
+
+
+            Object o = theClass.newInstance();
+
+            while (rs.next()){
+                for (int i=1; i<=numberOfColumns; i++){
+                    String columnName = metadata.getColumnName(i);
+
+                    ObjectHelper.setter(o, columnName, rs.getObject(i));
+                }
+            }
+            if(ObjectHelper.getter(o,"id") == null){
+                return null;
+            }
+
+            return o;
 
         } catch (SQLException e) {
             e.printStackTrace();
