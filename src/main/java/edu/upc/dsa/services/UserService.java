@@ -155,11 +155,11 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateUserLanguage(@PathParam("username")String username,String language) {
         logger.info(username+language);
-        // User user=umd.getUser(username);
-        //User u = this.umd.updateUser(user.getUsername(),user.getEmail(), user.getPassword());
-        // if (u == null) return Response.status(404).build();
+        User user = umd.updateUserLanguage(username,language);
 
-        return Response.status(201).build();
+
+        if (user == null){ return Response.status(404).build();}
+        else{return Response.status(201).build();}
     }
 
     @PUT

@@ -147,4 +147,21 @@ public class UserManagerDAOImpl implements UserManagerDAO {
 
 
     }
+
+    @Override
+    public User updateUserLanguage(String username, String language) {
+        Session session = null;
+        User user = null;
+        try{
+            session = FactorySession.openSession();
+            user = (User)session.update(User.class, "LANGUAGE", language,"USERNAME",username);
+        }
+        catch (Exception e){
+            logger.error("Error");
+        }
+        finally {
+            session.close();
+        }
+        return user;
+    }
 }
