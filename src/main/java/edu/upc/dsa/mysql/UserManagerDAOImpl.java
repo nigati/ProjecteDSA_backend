@@ -12,7 +12,7 @@ import edu.upc.dsa.models.User;
 //import jdk.jpackage.internal.Log;
 import org.apache.log4j.Logger;
 
-import javax.jws.soap.SOAPBinding;
+
 
 public class UserManagerDAOImpl implements UserManagerDAO {
     private static UserManagerDAO instance;

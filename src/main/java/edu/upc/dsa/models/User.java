@@ -10,7 +10,7 @@ public class User{
     private String email;
     private String password;
     private int coins;
-    private List<Item> inventario;
+    //private List<Item> inventario;
     public User() {
     }
 
@@ -20,7 +20,7 @@ public class User{
         this.setEmail(email);
         this.setPassword(password);
         this.setCoins(5000);
-        this.inventario=new ArrayList<>();
+        //this.inventario=new ArrayList<>();
     }
 
     public String getUsername() {
@@ -47,12 +47,12 @@ public class User{
     public int getCoins() {return coins;}
     public void setCoins(int coins) {this.coins = coins;}
 
-    public List<Item> getInventario() {
+    /*public List<Item> getInventario() {
         return this.inventario;
     }
     public void setInventario(List<Item> inventario) {
         this.inventario = inventario;
-    }
+    }*/
 
     public int getId() {return id;}
     public void setId(int id) {this.id = id;}
