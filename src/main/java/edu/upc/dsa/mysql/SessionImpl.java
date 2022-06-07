@@ -96,7 +96,7 @@ public class SessionImpl implements Session {
 
 
 
-    public Object update(Class theClass, String SET, String valueSET, String WHERE, String valueWHERE) {
+    public void update(Class theClass, String SET, String valueSET, String WHERE, String valueWHERE) {
         String updateQuery = QueryHelper.createQueryUPDATE(theClass, SET, WHERE);
         //System.out.println(updateQuery);
         ResultSet rs;
@@ -108,29 +108,30 @@ public class SessionImpl implements Session {
             pstm = conn.prepareStatement(updateQuery);
             pstm.setObject(1, valueSET); //son los ?
             pstm.setObject(2, valueWHERE);
-            rs = pstm.executeQuery();
-            rs.next();
-            ResultSetMetaData rsmd = rs.getMetaData();
-
-            int numberOfColumns = rsmd.getColumnCount();
-
-            Object o = theClass.newInstance();
-            int i=1;
-            while (i<=numberOfColumns)
-            {
-                ObjectHelper.setter(o, rsmd.getColumnName(i), rs.getObject(i));
-                i++;
-            }
-            return o;
+            pstm.executeQuery();
+//            rs.next();
+//            ResultSetMetaData rsmd = rs.getMetaData();
+//
+//            int numberOfColumns = rsmd.getColumnCount();
+//
+//            Object o = theClass.newInstance();
+//            int i=1;
+//            while (i<=numberOfColumns)
+//            {
+//                ObjectHelper.setter(o, rsmd.getColumnName(i), rs.getObject(i));
+//                i++;
+//            }
+//            return o;
         }
         catch (SQLException e) {
             e.printStackTrace();
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
         }
-        return null;
+//         catch (InstantiationException e) {
+//            throw new RuntimeException(e);
+//        } catch (IllegalAccessException e) {
+//            throw new RuntimeException(e);
+//        }
+        //return null;
 
     }
 

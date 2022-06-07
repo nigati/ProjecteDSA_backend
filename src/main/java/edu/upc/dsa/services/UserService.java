@@ -155,18 +155,25 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateUserLanguage(@PathParam("username")String username,String language) {
         logger.info(username+language);
-        User user = umd.updateUserLanguage(username,language);
+        umd.updateUserLanguage(username,language);
+        User user= umd.getUser(username);
 
+        if (user==null)
+        {
+            return Response.status(404).build();
+        }
+        else {
+            return Response.status(201).build();
+        }
 
-        if (user == null){ return Response.status(404).build();}
-        else{return Response.status(201).build();}
     }
 
     @PUT
     @ApiOperation(value = "buy Item from shop", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response=User.class),
-            @ApiResponse(code = 404, message = "Something went wrong")
+            @ApiResponse(code = 404, message = "Something went wrong"),
+
     })
     @Path("/buyItem")
     @Produces(MediaType.APPLICATION_JSON)
@@ -180,7 +187,7 @@ public class UserService {
 
         if (u == null) return Response.status(404).build();
 
-        return Response.status(201).entity(user).build();
+        return Response.status(201).entity(u).build();
     }
 
     @GET

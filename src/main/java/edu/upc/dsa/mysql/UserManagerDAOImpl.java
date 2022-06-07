@@ -128,17 +128,27 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         User user1 = null;
         Item i1=null;
         User user0 = null;
+        User user2=null;
 
         try {
             session = FactorySession.openSession();
             user0 = (User)session.get(User.class, "USERNAME",username);
             i1 = (Item) session.get(Item.class, "NAME", item);
-            int saldo= user0.getCoins()-i1.getCoins();
-            user1= (User)session.update(User.class, "COINS", String.valueOf(saldo),"USERNAME",username);
-            logger.info("1 " +user1.getCoins());
-            user1= (User)session.get(User.class,"USERNAME", username);
-            logger.info("2 " +user1.getCoins());
-            return user1;
+            if (user0.getCoins()>= i1.getCoins())
+            {
+                int saldo = user0.getCoins()- i1.getCoins();
+                session.update(User.class, "COINS", String.valueOf(saldo),"USERNAME",username);
+
+                user1= (User)session.get(User.class,"USERNAME", username);
+                logger.info("2 " +user1.getCoins());
+
+            }
+            else
+            {
+                logger.info("Not enough money to buy item");
+
+            }
+
 
         }
         catch (Exception e) {
@@ -147,18 +157,18 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         finally {
             session.close();
         }
-        return null;
+        return user1;
 
 
     }
 
     @Override
-    public User updateUserLanguage(String username, String language) {
+    public void updateUserLanguage(String username, String language) {
         Session session = null;
         User user = null;
         try{
             session = FactorySession.openSession();
-            user = (User)session.update(User.class, "LANGUAGE", language,"USERNAME",username);
+            session.update(User.class, "LANGUAGE", language,"USERNAME",username);
         }
         catch (Exception e){
             logger.error("Error");
@@ -166,6 +176,6 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         finally {
             session.close();
         }
-        return user;
+
     }
 }

@@ -15,7 +15,7 @@ public interface Session<E> {
 
     //Object getS(Class theClass, String name);
 
-    Object update(Class theClass, String SET, String valueSET, String WHERE, String valueWHERE);
+    void update(Class theClass, String SET, String valueSET, String WHERE, String valueWHERE);
     void delete(Object object);
     boolean isUserRegistered(Class class1, User user);
     List<Object> findAll(Class theClass);
