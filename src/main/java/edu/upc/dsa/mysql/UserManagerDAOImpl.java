@@ -132,7 +132,11 @@ public class UserManagerDAOImpl implements UserManagerDAO {
             user0 = (User)session.get(User.class, "USERNAME",username);
             i1 = (Item) session.get(Item.class, "NAME", item);
             int saldo= user0.getCoins()-i1.getCoins();
-            user1 = (User)session.update(User.class, "COINS", String.valueOf(saldo),"USERNAME",username);
+            user1= (User)session.update(User.class, "COINS", String.valueOf(saldo),"USERNAME",username);
+            logger.info("1 " +user1.getCoins());
+            user1= (User)session.get(User.class,"USERNAME", username);
+            logger.info("2 " +user1.getCoins());
+            return user1;
 
         }
         catch (Exception e) {
@@ -141,7 +145,7 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         finally {
             session.close();
         }
-        return user1;
+        return null;
 
 
     }

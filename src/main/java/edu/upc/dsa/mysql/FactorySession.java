@@ -23,7 +23,7 @@ public class FactorySession {
         try {
             conn =
                     DriverManager.getConnection("jdbc:mariadb://localhost:3306/thebindingofgilbert",
-                            "root","root");
+                            "root","admin");
 
         } catch (SQLException ex) {
             // handle any errors
