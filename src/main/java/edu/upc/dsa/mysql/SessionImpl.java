@@ -98,6 +98,7 @@ public class SessionImpl implements Session {
 
     public Object update(Class theClass, String SET, String valueSET, String WHERE, String valueWHERE) {
         String updateQuery = QueryHelper.createQueryUPDATE(theClass, SET, WHERE);
+        //System.out.println(updateQuery);
         ResultSet rs;
         PreparedStatement pstm;
 

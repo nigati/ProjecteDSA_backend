@@ -28,7 +28,10 @@
                     contentType: 'application/json; charset=utf-8'
                 })
                     .done(function (data, status) {
-                        alert("Login: " + data.username + " wellcome! \nStatus: " + status);
+                        //alert("Login: " + data.username + " wellcome! \nStatus: " + status);
+                        localStorage.setItem("username",data.username);
+                        localStorage.setItem("isLogged","true");
+                        //alert(localStorage.getItem("username"));
                         $(location).prop('href', '/')
                     })
                     .fail(function (xhr, err) {
@@ -59,7 +62,7 @@
 <!--</div>-->
 
 
-<div class="jumbotron text-center">
+<div class="jumbotron text-center bg-info">
     <h1>LOGIN</h1>
 </div>
 <div class="container">

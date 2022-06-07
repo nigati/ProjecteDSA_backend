@@ -12,6 +12,8 @@ import edu.upc.dsa.models.User;
 //import jdk.jpackage.internal.Log;
 import org.apache.log4j.Logger;
 
+
+
 public class UserManagerDAOImpl implements UserManagerDAO {
     private static UserManagerDAO instance;
 
@@ -76,6 +78,8 @@ public class UserManagerDAOImpl implements UserManagerDAO {
 
     }
 
+
+
     @Override
     public User updateUser(String name, String email, String password) {
         return null;
@@ -116,5 +120,31 @@ public class UserManagerDAOImpl implements UserManagerDAO {
 
     public List<User> getUsers(){
         return null;
+    }
+
+    public User buyItem (String item, String username) //We will update the coins after buying something
+    {
+        Session session = null;
+        User user1 = null;
+        Item i1=null;
+        User user0 = null;
+
+        try {
+            session = FactorySession.openSession();
+            user0 = (User)session.get(User.class, "USERNAME",username);
+            i1 = (Item) session.get(Item.class, "NAME", item);
+            int saldo= user0.getCoins()-i1.getCoins();
+            user1 = (User)session.update(User.class, "COINS", String.valueOf(saldo),"USERNAME",username);
+
+        }
+        catch (Exception e) {
+            // LOG
+        }
+        finally {
+            session.close();
+        }
+        return user1;
+
+
     }
 }

@@ -1,12 +1,19 @@
 package edu.upc.dsa.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User{
 
     private String username;
+    private int id;
     private String email;
     private String password;
     private int coins;
     private String language;
+
+    //private List<Item> inventario;
+
     public User() {
     }
 
@@ -15,8 +22,9 @@ public class User{
         this.setUsername(name);
         this.setEmail(email);
         this.setPassword(password);
-        this.setCoins(50);
         this.setLanguage("en");
+        this.setCoins(5000);
+        //this.inventario=new ArrayList<>();
     }
 
     public String getUsername() {
@@ -43,6 +51,17 @@ public class User{
     public int getCoins() {return coins;}
     public void setCoins(int coins) {this.coins = coins;}
 
+
     public String getLanguage() {return language;}
     public void setLanguage(String language) {this.language = language;}
+
+    /*public List<Item> getInventario() {
+        return this.inventario;
+    }
+    public void setInventario(List<Item> inventario) {
+        this.inventario = inventario;
+    }*/
+
+    public int getId() {return id;}
+    public void setId(int id) {this.id = id;}
 }
