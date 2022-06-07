@@ -13,32 +13,26 @@
         $(document).ready(function () {
             //alert("Hola");
             $("#botonRegistro").click(function () {
-            var email1 = $("#email").val();
-            var pass1= $("#password").val();
-            var email2 = $("#email2").val();
-            var pass2= $("#password2").val();
+            let email1 = $("#email").val();
+            let pass1= $("#password").val();
+            let email2 = $("#email2").val();
+            let pass2= $("#password2").val();
             if ((email1).match(email2) && (pass1).match(pass2))
             {
-                var dataBody=
+                let dataBody=
                 {
                     username: $("#usrname").val(),
                     email: $("#email").val(),
                     password: $("#password").val()
                 }
-                //alert(dataBody.username);
-
-                var URL = "/dsaApp/users/register";
-                //alert(url);
+                let URL = "/dsaApp/users/register";
                  $.post({
                     url: URL,
                     data: JSON.stringify(dataBody),
                     contentType: 'application/json; charset=utf-8'
                 })
                     .done(function (data, status) {
-                        //alert("Data: " + data.username + " wellcome! \nStatus: " + status);
-                        alert("Wellcome! \nStatus: " + status);
-
-
+                        location.href = "/index.html"
                     })
                     .fail(function (xhr, err) {
                         alert("Something went wrong");
@@ -54,22 +48,9 @@
     </script>
 </head>
 <body>
-
-<div class="jumbotron text-center">
+<div class="jumbotron text-center bg-info">
     <h1>REGISTRATE</h1>
 </div>
-<!--<div class="container-md">-->
-<!--    <div class="form-group">-->
-<!--        <label for="usrname">User name:</label>-->
-<!--        <input type="text" class="form-control" id="usrname">-->
-<!--        <label for="email">E-mail:</label>-->
-<!--        <input type="text" class="form-control" id="email">-->
-<!--        <label for="password">Password:</label>-->
-<!--        <input type="text" class="form-control" id="password">-->
-<!--    </div>-->
-<!--    <button type="button" class="btn btn-info " id="botonRegistro">Sign In</button>-->
-<!--    <a href="/login/" class="btn btn-info" role="button">Login</a>-->
-<!--</div>-->
 <div class="container">
     <div class = "was-validated">
         <div class="form-group">
@@ -103,7 +84,7 @@
             <div class="invalid-feedback">Please fill out this field.</div>
         </div>
         <a class="btn btn-info" role="button" id="botonRegistro">Sign up</a>
-        <a href="/login/" class="btn btn-info" role="button">Log In</a>
+        <a class="btn btn-danger" href="/index.html" role="button">Cancel</a>
 
     </div>
 </div>

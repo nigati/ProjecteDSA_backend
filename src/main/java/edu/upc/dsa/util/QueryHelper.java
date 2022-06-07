@@ -12,23 +12,23 @@ public class QueryHelper {
         Integer passwordPos = null;
         String [] fields = ObjectHelper.getFields(entity);
 
-        sb.append("ID");
+        //sb.append("ID");
         for (int i=0;i<fields.length;i++) {
             if (fields[i].equals("password")){
                 passwordPos= i;
             }
-            sb.append(", ").append(fields[i]);
+            sb.append(fields[i]).append(", ");
         }
-
-        sb.append(") VALUES (?");
+        sb.delete(sb.length()-2,sb.length());
+        sb.append(") VALUES (");
         for (int i = 0; i< fields.length ;i++){
             if(passwordPos!=null && passwordPos == i){
-                sb.append(", MD5(?)");
+                sb.append("MD5(?), ");
             }else {
-                sb.append(", ?");
+                sb.append("?, ");
             }
         }
-
+        sb.delete(sb.length()-2,sb.length());
         sb.append(")");
 
         return sb.toString();
