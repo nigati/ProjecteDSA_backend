@@ -33,9 +33,9 @@ public class ItemService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Item.class, responseContainer="List"),
     })
-    @Path("/")
+    @Path("/items")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTracks() {
+    public Response getItemsforShop() {
 
         List<Item> items = this.imd.getAll();
 
