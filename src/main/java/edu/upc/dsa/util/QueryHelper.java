@@ -12,23 +12,23 @@ public class QueryHelper {
         Integer passwordPos = null;
         String [] fields = ObjectHelper.getFields(entity);
 
-        sb.append("ID");
+        //sb.append("ID");
         for (int i=0;i<fields.length;i++) {
             if (fields[i].equals("password")){
                 passwordPos= i;
             }
-            sb.append(", ").append(fields[i]);
+            sb.append(fields[i]).append(", ");
         }
-
-        sb.append(") VALUES (?");
+        sb.delete(sb.length()-2,sb.length());
+        sb.append(") VALUES (");
         for (int i = 0; i< fields.length ;i++){
             if(passwordPos!=null && passwordPos == i){
-                sb.append(", MD5(?)");
+                sb.append("MD5(?), ");
             }else {
-                sb.append(", ?");
+                sb.append("?, ");
             }
         }
-
+        sb.delete(sb.length()-2,sb.length());
         sb.append(")");
 
         return sb.toString();
@@ -43,7 +43,13 @@ public class QueryHelper {
 
         return sb.toString();
     }
+    public static String createQuerySELECTbyUsername(Class theClass, String username) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT * FROM ").append(theClass.getSimpleName());
+        sb.append(" WHERE ").append("username = '").append(username).append("'");
 
+        return sb.toString();
+    }
 
     public static String createQueryUPDATE(Class clase, String SET, String Where) {
         StringBuffer sb = new StringBuffer();

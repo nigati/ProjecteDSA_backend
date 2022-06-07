@@ -20,5 +20,6 @@ public interface Session<E> {
     boolean isUserRegistered(Class class1, User user);
     List<Object> findAll(Class theClass);
     List<Object> findAll(Class theClass, HashMap params);
+    Object getByUsername(Class theClass, String username);
     List<Object> query(String query, Class theClass, HashMap params);
 }

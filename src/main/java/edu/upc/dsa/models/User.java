@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User{
-
-    private String username;
     private int id;
+    private String username;
+
     private String email;
     private String password;
     private int coins;
+    private String language;
+
     //private List<Item> inventario;
+
     public User() {
     }
 
@@ -19,6 +22,7 @@ public class User{
         this.setUsername(name);
         this.setEmail(email);
         this.setPassword(password);
+        this.setLanguage("en");
         this.setCoins(5000);
         //this.inventario=new ArrayList<>();
     }
@@ -46,6 +50,10 @@ public class User{
 
     public int getCoins() {return coins;}
     public void setCoins(int coins) {this.coins = coins;}
+
+
+    public String getLanguage() {return language;}
+    public void setLanguage(String language) {this.language = language;}
 
     /*public List<Item> getInventario() {
         return this.inventario;
