@@ -43,7 +43,13 @@ public class QueryHelper {
 
         return sb.toString();
     }
+    public static String createQuerySELECTbyUsername(Class theClass, String username) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT * FROM ").append(theClass.getSimpleName());
+        sb.append(" WHERE ").append("username = '").append(username).append("'");
 
+        return sb.toString();
+    }
 
     public static String createQueryUPDATE(Class clase, String SET, String Where) {
         StringBuffer sb = new StringBuffer();

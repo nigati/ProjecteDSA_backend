@@ -33,13 +33,12 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         return 0;
     }
 
-    public void addUser(User user) {
+    public int addUser(User user) {
         logger.info("Trying to add a new User ");
         Session session = null;
         List<Item> items;
         try{
             session = FactorySession.openSession();
-
             session.save(user);
             /*boolean alreadyreg =session.isUserRegistered(User.class, user);
             if (!alreadyreg){session.save(user);}
@@ -49,16 +48,19 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         }
         catch (Exception e){
             logger.error("Something happened trying to open the session: "+e.getMessage());
+            return 0;
         }
 
        finally{
            session.close();
+
         }
+        return 1;
     }
 
     @Override
     public User getUser(String username) {
-
+        logger.info("Trying to get user with username: " + username);
         Session session = null;
         User user1 = null;
         try {
@@ -66,7 +68,7 @@ public class UserManagerDAOImpl implements UserManagerDAO {
             user1 = (User)session.get(User.class, "USERNAME", username);
         }
         catch (Exception e) {
-            // LOG
+            logger.error("Something went wrong: "+e.getMessage());
         }
         finally {
             session.close();
@@ -144,5 +146,22 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         return user1;
 
 
+    }
+
+    @Override
+    public User updateUserLanguage(String username, String language) {
+        Session session = null;
+        User user = null;
+        try{
+            session = FactorySession.openSession();
+            user = (User)session.update(User.class, "LANGUAGE", language,"USERNAME",username);
+        }
+        catch (Exception e){
+            logger.error("Error");
+        }
+        finally {
+            session.close();
+        }
+        return user;
     }
 }

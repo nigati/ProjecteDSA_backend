@@ -25,7 +25,7 @@ import java.util.List;
 @Api(value = "/users", description = "Endpoint to user Service")
 @Path("/users")
 public class UserService {
-
+    final static Logger logger = Logger.getLogger(UserService.class);
     private UserManager um;
     private UserManagerDAO umd;
     private ItemManagerDAO imd;
@@ -60,9 +60,9 @@ public class UserService {
             return Response.status(404).entity(user).build();
         }
 
-        User checking = this.um.addUser(user);
-        this.umd.addUser(user);
-        if (checking != null)
+        //User checking = this.um.addUser(user);
+        int checking = this.umd.addUser(user);
+        if (checking == 1)
         {
             return Response.status(201).entity(user).build();
         }
@@ -133,15 +133,33 @@ public class UserService {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found")
     })
+
     @Path("/{username}")
     public Response updateUser(String username) {
 
-        User user=umd.getUser(username);
-        User u = this.umd.updateUser(user.getUsername(),user.getEmail(), user.getPassword());
+       // User user=umd.getUser(username);
+        //User u = this.umd.updateUser(user.getUsername(),user.getEmail(), user.getPassword());
 
-        if (u == null) return Response.status(404).build();
+       // if (u == null) return Response.status(404).build();
 
         return Response.status(201).build();
+    }
+    @PUT
+    @ApiOperation(value = "update a User", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+
+    @Path("/{username}/updatelanguage")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateUserLanguage(@PathParam("username")String username,String language) {
+        logger.info(username+language);
+        User user = umd.updateUserLanguage(username,language);
+
+
+        if (user == null){ return Response.status(404).build();}
+        else{return Response.status(201).build();}
     }
 
     @PUT
