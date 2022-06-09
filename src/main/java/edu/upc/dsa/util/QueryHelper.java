@@ -1,6 +1,7 @@
 package edu.upc.dsa.util;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class QueryHelper {
 
@@ -54,11 +55,20 @@ public class QueryHelper {
     public static String createQueryUPDATE(Class clase, String SET, String Where) {
         StringBuffer sb = new StringBuffer();
         sb.append("UPDATE ").append(clase.getSimpleName());
-        sb.append(" SET ").append(SET);
-        sb.append(" = ? ");
-        sb.append(" WHERE ");
-        sb.append(Where);
-        sb.append(" = ?");
+        if (Objects.equals(SET, "PASSWORD")){
+            sb.append(" SET ").append(SET);
+            sb.append(" = MD5(?) ");
+            sb.append(" WHERE ");
+            sb.append(Where);
+            sb.append(" = ?");
+        }
+        else{
+            sb.append(" SET ").append(SET);
+            sb.append(" = ? ");
+            sb.append(" WHERE ");
+            sb.append(Where);
+            sb.append(" = ?");
+        }
 
         //UPDATE personas
         //SET apellido2 = 'RODRIGUEZ'

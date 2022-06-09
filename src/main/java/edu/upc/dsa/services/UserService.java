@@ -135,6 +135,7 @@ public class UserService {
     })
 
     @Path("/{username}")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response updateUser(String username) {
 
        // User user=umd.getUser(username);
@@ -167,7 +168,72 @@ public class UserService {
         }
 
     }
+    @PUT
+    @ApiOperation(value = "update a User's username", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
 
+    @Path("/{username}/updateusername")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateUserUsername(@PathParam("username")String username,String new_username) {
+        logger.info("I'm updating the username:"+username+" to: "+new_username);
+        umd.updateUserUsername(username,new_username);
+        User user= umd.getUser(username);
+        if (user==null)
+        {
+            return Response.status(404).build();
+        }
+        else {
+            return Response.status(201).build();
+        }
+
+    }
+    @PUT
+    @ApiOperation(value = "update a User's username", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+
+    @Path("/{username}/updatepassword")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateUserPassword(@PathParam("username")String username,String new_password) {
+        logger.info("I'm updating the "+username+" password to: "+new_password);
+        umd.updateUserPassword(username,new_password);
+        User user= umd.getUser(username);
+        if (user==null)
+        {
+            return Response.status(404).build();
+        }
+        else {
+            return Response.status(201).build();
+        }
+
+    }
+    @PUT
+    @ApiOperation(value = "update a User's username", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+
+    @Path("/{username}/updateemail")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateUserEmail(@PathParam("username")String username,String new_email) {
+        logger.info("I'm updating the "+username+" email to: "+new_email);
+        umd.updateUserEmail(username,new_email);
+        User user= umd.getUser(username);
+        if (user==null)
+        {
+            return Response.status(404).build();
+        }
+        else {
+            return Response.status(201).build();
+        }
+
+    }
     @PUT
     @ApiOperation(value = "buy Item from shop", notes = "asdasd")
     @ApiResponses(value = {

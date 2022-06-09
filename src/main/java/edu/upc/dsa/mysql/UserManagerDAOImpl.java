@@ -178,4 +178,55 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         }
 
     }
+
+    @Override
+    public void updateUserUsername(String username, String new_username) {
+        Session session = null;
+        User user = null;
+        try{
+            session = FactorySession.openSession();
+            session.update(User.class, "USERNAME", new_username,"USERNAME",username);
+        }
+        catch (Exception e){
+            logger.error("Error");
+        }
+        finally {
+            session.close();
+        }
+
+    }
+
+    @Override
+    public void updateUserPassword(String username, String new_password) {
+        Session session = null;
+        User user = null;
+        try{
+            session = FactorySession.openSession();
+            session.update(User.class, "PASSWORD", new_password,"USERNAME",username);
+        }
+        catch (Exception e){
+            logger.error("Error");
+        }
+        finally {
+            session.close();
+        }
+
+    }
+
+    @Override
+    public void updateUserEmail(String username, String new_email) {
+        Session session = null;
+        User user = null;
+        try{
+            session = FactorySession.openSession();
+            session.update(User.class, "EMAIL", new_email,"USERNAME",username);
+        }
+        catch (Exception e){
+            logger.error("Error");
+        }
+        finally {
+            session.close();
+        }
+
+    }
 }

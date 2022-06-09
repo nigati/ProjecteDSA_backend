@@ -16,4 +16,7 @@ public interface UserManagerDAO {
     //public List <User> getEmployeeByDept(int deptId);
     public User buyItem (String i, String username);
     public void updateUserLanguage(String username, String language);
+    public void updateUserUsername(String username, String new_username);
+    public void updateUserPassword(String username, String new_password);
+    public void updateUserEmail(String username, String new_email);
 }
