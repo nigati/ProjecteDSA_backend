@@ -1,5 +1,6 @@
 package edu.upc.dsa.mysql;
 
+import edu.upc.dsa.models.LogInParams;
 import edu.upc.dsa.models.User;
 
 import java.util.HashMap;
@@ -17,6 +18,7 @@ public interface Session<E> {
 
     void update(Class theClass, String SET, String valueSET, String WHERE, String valueWHERE);
     void delete(Object object);
+    int deleteUser(LogInParams logInParams);
     boolean isUserRegistered(Class class1, User user);
     List<Object> findAll(Class theClass);
     List<Object> findAll(Class theClass, HashMap params);

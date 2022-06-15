@@ -3,6 +3,9 @@ package edu.upc.dsa.mysql;
 import edu.upc.dsa.UserManager;
 import edu.upc.dsa.models.Item;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -86,8 +89,38 @@ public class UserManagerDAOImpl implements UserManagerDAO {
     }
 
     @Override
-    public void deleteUser(int employeeID) {
+    public int deleteUser(LogInParams logInParams) {
+        int i=0;
+        User user1=null;
+        Session session = null;
 
+        try{
+
+            session = FactorySession.openSession();
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("username", logInParams.getUsername());
+            hashMap.put("password", logInParams.getPassword());
+            List<Object> l = session.findAll(User.class, hashMap);
+            if(l.size()==1){
+                logger.info("Correct login "+logInParams.getUsername());
+                User u = (User) l.get(0);
+                i=session.deleteUser(logInParams);
+                //session.update(u); //futuro
+
+            }else if(l.size()>1){
+                logger.warn("Duplicated user");
+
+            }
+
+        }
+        catch (Exception e){
+            logger.error("Error");
+            i=0;
+        }
+        finally {
+            session.close();
+        }
+        return i;
     }
 
     public User login(LogInParams logInParams) {

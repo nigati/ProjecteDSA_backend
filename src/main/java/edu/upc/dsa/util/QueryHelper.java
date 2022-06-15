@@ -1,5 +1,7 @@
 package edu.upc.dsa.util;
 
+import edu.upc.dsa.models.LogInParams;
+
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -142,5 +144,10 @@ public class QueryHelper {
 
         return sb.toString();
     }
-
+    public static String createQueryDeleteUser(LogInParams logInParams) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("DELETE FROM User ");
+        sb.append(" WHERE ").append("username = '").append(logInParams.username).append("'");
+        return sb.toString();
+    }
 }

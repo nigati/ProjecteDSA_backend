@@ -11,7 +11,7 @@ public interface UserManagerDAO {
     public int addUser(User user);
     public User getUser(String username);
     public User updateUser(String name, String email, String password);
-    public void deleteUser(int employeeID);
+    public int deleteUser(LogInParams logInParams);
     public List<User> getUsers();
     //public List <User> getEmployeeByDept(int deptId);
     public User buyItem (String i, String username);
