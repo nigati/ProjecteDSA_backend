@@ -144,10 +144,18 @@ public class QueryHelper {
 
         return sb.toString();
     }
-    public static String createQueryDeleteUser(LogInParams logInParams) {
+    public static String createQueryDELETE(Object object) {
+        /*StringBuffer sb = new StringBuffer();
+        sb.append("DELETE FROM ");
+        sb.append(object.getClass().getSimpleName()).append(" ");
+        sb.append(" WHERE ").append("username = '").append(logInParams.username).append("'");
+        return sb.toString();*/
+        return null;
+    }
+    public static String createQueryDeleteUser(String username) {
         StringBuffer sb = new StringBuffer();
         sb.append("DELETE FROM User ");
-        sb.append(" WHERE ").append("username = '").append(logInParams.username).append("'");
+        sb.append(" WHERE ").append("username = '").append(username).append("'");
         return sb.toString();
     }
 }

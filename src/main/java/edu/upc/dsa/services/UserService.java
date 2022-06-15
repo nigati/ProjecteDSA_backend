@@ -275,17 +275,17 @@ public class UserService {
         return Response.status(201).entity(user).build();
 
     }
-    @POST
+    @DELETE
     @ApiOperation(value = "delete a User", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response= User.class),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/delete/{username}")
+    @Path("/{username}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteUser(@PathParam("username")String username,LogInParams logInParams) {
+    public Response deleteUser(@PathParam("username")String username) {
 
-        int i = umd.deleteUser(logInParams);
+        int i = umd.deleteUser(username);
         if (i == 0) return Response.status(404).build();
         else {
             return Response.status(201).build();

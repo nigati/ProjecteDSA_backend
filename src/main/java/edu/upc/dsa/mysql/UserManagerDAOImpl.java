@@ -89,28 +89,15 @@ public class UserManagerDAOImpl implements UserManagerDAO {
     }
 
     @Override
-    public int deleteUser(LogInParams logInParams) {
+    public int deleteUser(String username) {
         int i=0;
-        User user1=null;
         Session session = null;
 
         try{
 
             session = FactorySession.openSession();
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("username", logInParams.getUsername());
-            hashMap.put("password", logInParams.getPassword());
-            List<Object> l = session.findAll(User.class, hashMap);
-            if(l.size()==1){
-                logger.info("Correct login "+logInParams.getUsername());
-                User u = (User) l.get(0);
-                i=session.deleteUser(logInParams);
-                //session.update(u); //futuro
-
-            }else if(l.size()>1){
-                logger.warn("Duplicated user");
-
-            }
+            logger.info("Deleting user with username: "+username);
+            i=session.deleteUser(username);
 
         }
         catch (Exception e){

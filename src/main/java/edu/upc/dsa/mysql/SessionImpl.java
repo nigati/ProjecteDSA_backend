@@ -137,12 +137,22 @@ public class SessionImpl implements Session {
     }
 
     public void delete(Object object) {
+        /*String insertQuery = QueryHelper.createQueryDELETE(object);
+
+        PreparedStatement pstm = null;
+
+        try {
+            pstm = conn.prepareStatement(insertQuery);
+            pstm.setObject(1, 0);
+        }
+        catch (Exception e) {
+        }*/
 
     }
 
-    @Override
-    public int deleteUser(LogInParams logInParams) {
-        String insertQuery = QueryHelper.createQueryDeleteUser(logInParams);
+
+    public int deleteUser(String username) {
+        String insertQuery = QueryHelper.createQueryDeleteUser(username);
         PreparedStatement pstm = null;
 
         try {
