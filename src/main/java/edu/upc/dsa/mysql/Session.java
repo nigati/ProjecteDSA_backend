@@ -24,4 +24,5 @@ public interface Session<E> {
     List<Object> findAll(Class theClass, HashMap params);
     Object getByUsername(Class theClass, String username);
     List<Object> query(String query, Class theClass, HashMap params);
+    public List<Object> getList(Class theClass, String key, Object value);
 }

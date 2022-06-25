@@ -20,6 +20,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(value = "/users", description = "Endpoint to user Service")
@@ -247,13 +248,13 @@ public class UserService {
     })
     @Path("/buyItem")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response buyItem(ToBuyItems toBuyItems) {
+    public Response buyItem(Inventory inventory) {
 
-        User user=umd.getUser(toBuyItems.getPlayer());
+        User user=umd.getUser(inventory.getUsername());
         //System.out.println("Consigo al player: "+ user.getCoins());
-        Item i =imd.getItem(toBuyItems.getItem());
+        Item i =imd.getItem(inventory.getName());
         System.out.println("Consigo al item: "+ i.getCoins());
-        User u= this.umd.buyItem(toBuyItems.getItem(),toBuyItems.getPlayer());
+        User u= this.umd.buyItem(inventory.getName(), inventory.getUsername());
 
         if (u == null) return Response.status(404).build();
 
@@ -290,6 +291,33 @@ public class UserService {
         else {
             return Response.status(201).build();
         }
+    }
+
+
+    @GET
+    @ApiOperation(value = "get Inventory from username", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response= Item.class, responseContainer="List"),
+
+    })
+    @Path("inventory/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getInventory(@PathParam("username")String username) {
+
+        List<Inventory> itemsInventoryAux=umd.getInventory(username);
+        List<Item> itemsInventory = new ArrayList<>();
+        int i=0;
+        while (i<itemsInventoryAux.size())
+        {
+            itemsInventory.add(umd.getItem(itemsInventoryAux.get(i).getName()));
+            i++;
+        }
+        GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(itemsInventory) {};
+        if (itemsInventory.size() == 0) return Response.status(404).build();
+        return Response.status(201).entity(entity).build();
+
+
+
     }
 
 

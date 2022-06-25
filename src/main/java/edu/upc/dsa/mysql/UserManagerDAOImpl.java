@@ -1,11 +1,16 @@
 package edu.upc.dsa.mysql;
 
 import edu.upc.dsa.UserManager;
+import edu.upc.dsa.models.Inventory;
 import edu.upc.dsa.models.Item;
+
+
+import java.util.ArrayList;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -142,6 +147,8 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         return null;
     }
 
+
+
     public User buyItem (String item, String username) //We will update the coins after buying something
     {
         Session session = null;
@@ -154,11 +161,12 @@ public class UserManagerDAOImpl implements UserManagerDAO {
             session = FactorySession.openSession();
             user0 = (User)session.get(User.class, "USERNAME",username);
             i1 = (Item) session.get(Item.class, "NAME", item);
+
             if (user0.getCoins()>= i1.getCoins())
             {
                 int saldo = user0.getCoins()- i1.getCoins();
                 session.update(User.class, "COINS", String.valueOf(saldo),"USERNAME",username);
-
+                session.save(new Inventory(item,username));
                 user1= (User)session.get(User.class,"USERNAME", username);
                 logger.info("2 " +user1.getCoins());
 
@@ -199,6 +207,26 @@ public class UserManagerDAOImpl implements UserManagerDAO {
 
     }
 
+
+    public List<Inventory> getInventory(String username){
+        Session session = null;
+
+        List<Inventory> list= new ArrayList<>();
+        //logger.info("Intentando encontrar el inventario de " + username);
+
+        try{
+            session = FactorySession.openSession();
+            //logger.info("BBDD abierta");
+            list =(List<Inventory>)session.getList(Inventory.class, "USERNAME", username);
+            //logger.info("Primer item de "+ username + " es " + list.get(0).getName());
+        }
+        catch (Exception e) {
+            logger.error("Error en el inventario");
+        }
+            return list;
+
+        }
+
     @Override
     public void updateUserUsername(String username, String new_username) {
         Session session = null;
@@ -220,16 +248,32 @@ public class UserManagerDAOImpl implements UserManagerDAO {
     public void updateUserPassword(String username, String new_password) {
         Session session = null;
         User user = null;
-        try{
+        try {
             session = FactorySession.openSession();
-            session.update(User.class, "PASSWORD", new_password,"USERNAME",username);
-        }
-        catch (Exception e){
+            session.update(User.class, "PASSWORD", new_password, "USERNAME", username);
+        } catch (Exception e) {
             logger.error("Error");
-        }
-        finally {
+        } finally {
             session.close();
         }
+    }
+
+
+
+    public Item getItem(String name)
+    {
+        logger.info("Trying to get item with name: " + name);
+        Session session = null;
+        Item item1 = null;
+        try {
+            session = FactorySession.openSession();
+            item1 = (Item)session.get(Item.class, "NAME", name);
+            logger.info(item1.getName());
+        }
+        catch (Exception e) {
+            logger.error("Something went wrong: " + e.getMessage());
+        }
+        return item1;
 
     }
 

@@ -12,7 +12,7 @@ public class User{
     private int coins;
     private String language;
 
-    //private List<Item> inventario;
+    //private List<String> inventario;
 
     public User() {
     }
@@ -55,10 +55,10 @@ public class User{
     public String getLanguage() {return language;}
     public void setLanguage(String language) {this.language = language;}
 
-    /*public List<Item> getInventario() {
+    /*public List<String> getInventario() {
         return this.inventario;
     }
-    public void setInventario(List<Item> inventario) {
+    public void setInventario(List<String> inventario) {
         this.inventario = inventario;
     }*/
 
