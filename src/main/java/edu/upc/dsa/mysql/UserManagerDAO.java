@@ -1,5 +1,6 @@
 package edu.upc.dsa.mysql;
 
+import edu.upc.dsa.models.Inventory;
 import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.LogInParams;
 import edu.upc.dsa.models.User;
@@ -19,7 +20,7 @@ public interface UserManagerDAO {
 
 
 
-    public List<String> getInventory(String username);
+    public List<Inventory> getInventory(String username);
 
     public Item getItem(String name);
 

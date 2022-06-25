@@ -208,13 +208,17 @@ public class UserManagerDAOImpl implements UserManagerDAO {
     }
 
 
-    public List<String> getInventory(String username){
+    public List<Inventory> getInventory(String username){
         Session session = null;
-        List<String> list= new ArrayList<>();
+
+        List<Inventory> list= new ArrayList<>();
+        //logger.info("Intentando encontrar el inventario de " + username);
 
         try{
             session = FactorySession.openSession();
-            list =(List<String>)session.getList(Inventory.class, "USERNAME", username);
+            //logger.info("BBDD abierta");
+            list =(List<Inventory>)session.getList(Inventory.class, "USERNAME", username);
+            //logger.info("Primer item de "+ username + " es " + list.get(0).getName());
         }
         catch (Exception e) {
             logger.error("Error en el inventario");
@@ -263,7 +267,8 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         Item item1 = null;
         try {
             session = FactorySession.openSession();
-            item1 = (Item)session.get(Inventory.class, "NAME", name);
+            item1 = (Item)session.get(Item.class, "NAME", name);
+            logger.info(item1.getName());
         }
         catch (Exception e) {
             logger.error("Something went wrong: " + e.getMessage());

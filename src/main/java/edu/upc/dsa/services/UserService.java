@@ -304,12 +304,12 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getInventory(@PathParam("username")String username) {
 
-        List<String> itemsInventoryAux=umd.getInventory(username);
+        List<Inventory> itemsInventoryAux=umd.getInventory(username);
         List<Item> itemsInventory = new ArrayList<>();
         int i=0;
         while (i<itemsInventoryAux.size())
         {
-            itemsInventory.add(umd.getItem(itemsInventoryAux.get(i)));
+            itemsInventory.add(umd.getItem(itemsInventoryAux.get(i).getName()));
             i++;
         }
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(itemsInventory) {};
