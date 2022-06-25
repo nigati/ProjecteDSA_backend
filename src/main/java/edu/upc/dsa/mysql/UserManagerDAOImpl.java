@@ -1,8 +1,10 @@
 package edu.upc.dsa.mysql;
 
 import edu.upc.dsa.UserManager;
+import edu.upc.dsa.models.Inventory;
 import edu.upc.dsa.models.Item;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -122,6 +124,8 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         return null;
     }
 
+
+
     public User buyItem (String item, String username) //We will update the coins after buying something
     {
         Session session = null;
@@ -134,11 +138,12 @@ public class UserManagerDAOImpl implements UserManagerDAO {
             session = FactorySession.openSession();
             user0 = (User)session.get(User.class, "USERNAME",username);
             i1 = (Item) session.get(Item.class, "NAME", item);
+
             if (user0.getCoins()>= i1.getCoins())
             {
                 int saldo = user0.getCoins()- i1.getCoins();
                 session.update(User.class, "COINS", String.valueOf(saldo),"USERNAME",username);
-
+                session.save(new Inventory(item,username));
                 user1= (User)session.get(User.class,"USERNAME", username);
                 logger.info("2 " +user1.getCoins());
 
@@ -177,5 +182,42 @@ public class UserManagerDAOImpl implements UserManagerDAO {
             session.close();
         }
 
+    }
+
+    public List<String> getInventory(String username){
+        Session session = null;
+        List<String> list= new ArrayList<>();
+
+        try{
+            session = FactorySession.openSession();
+            list =(List<String>)session.getList(Inventory.class, "USERNAME", username);
+        }
+        catch (Exception e){
+            logger.error("Error en el inventario");
+        }
+        finally {
+            session.close();
+        }
+        return list;
+
+    }
+
+    public Item getItem(String name)
+    {
+        logger.info("Trying to get item with name: " + name);
+        Session session = null;
+        Item item1 = null;
+        try {
+            session = FactorySession.openSession();
+            item1 = (Item)session.get(Inventory.class, "NAME", name);
+        }
+        catch (Exception e) {
+            logger.error("Something went wrong: "+e.getMessage());
+        }
+        finally {
+            session.close();
+        }
+
+        return item1;
     }
 }

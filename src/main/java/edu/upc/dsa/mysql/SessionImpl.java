@@ -94,6 +94,55 @@ public class SessionImpl implements Session {
         return null;
     }
 
+    public List<Object> getList(Class theClass, String key, Object value) {
+
+        String selectQuery =  QueryHelper.createQuerySELECT(theClass, key);
+        // "Select * from User WHERE username = ?"
+
+        ResultSet rs;
+        PreparedStatement pstm;
+        List<Object> list = new LinkedList<>();
+
+
+
+        try {
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setObject(1, value); //son los ?
+            rs = pstm.executeQuery();
+            //rs.next();
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            int numberOfColumns = rsmd.getColumnCount();
+
+            //Object o = theClass.newInstance();
+            /*int i=1;
+            while (i<=numberOfColumns)
+            {
+                ObjectHelper.setter(o, rsmd.getColumnName(i), rs.getObject(i));
+                i++;
+            }*/
+            while (rs.next()){
+                Object o = theClass.newInstance();
+                for (int i=1; i<=numberOfColumns; i++){
+                    String columnName = rsmd.getColumnName(i);
+                    ObjectHelper.setter(o, columnName, rs.getObject(i));
+                }
+                list.add(o);
+            }
+            return list;
+
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
 
 
     public void update(Class theClass, String SET, String valueSET, String WHERE, String valueWHERE) {
