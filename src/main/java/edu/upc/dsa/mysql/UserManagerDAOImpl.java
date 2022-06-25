@@ -160,6 +160,7 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         try {
             session = FactorySession.openSession();
             user0 = (User)session.get(User.class, "USERNAME",username);
+            logger.info(user0.getUsername());
             i1 = (Item) session.get(Item.class, "NAME", item);
 
             if (user0.getCoins()>= i1.getCoins())
@@ -169,6 +170,7 @@ public class UserManagerDAOImpl implements UserManagerDAO {
                 session.save(new Inventory(item,username));
                 user1= (User)session.get(User.class,"USERNAME", username);
                 logger.info("2 " +user1.getCoins());
+                logger.info(user1.getUsername());
 
             }
             else
