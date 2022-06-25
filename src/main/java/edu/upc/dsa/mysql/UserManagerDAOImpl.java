@@ -4,7 +4,13 @@ import edu.upc.dsa.UserManager;
 import edu.upc.dsa.models.Inventory;
 import edu.upc.dsa.models.Item;
 
+
 import java.util.ArrayList;
+
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.*;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -88,8 +94,25 @@ public class UserManagerDAOImpl implements UserManagerDAO {
     }
 
     @Override
-    public void deleteUser(int employeeID) {
+    public int deleteUser(String username) {
+        int i=0;
+        Session session = null;
 
+        try{
+
+            session = FactorySession.openSession();
+            logger.info("Deleting user with username: "+username);
+            i=session.deleteUser(username);
+
+        }
+        catch (Exception e){
+            logger.error("Error");
+            i=0;
+        }
+        finally {
+            session.close();
+        }
+        return i;
     }
 
     public User login(LogInParams logInParams) {
@@ -184,6 +207,7 @@ public class UserManagerDAOImpl implements UserManagerDAO {
 
     }
 
+
     public List<String> getInventory(String username){
         Session session = null;
         List<String> list= new ArrayList<>();
@@ -192,15 +216,45 @@ public class UserManagerDAOImpl implements UserManagerDAO {
             session = FactorySession.openSession();
             list =(List<String>)session.getList(Inventory.class, "USERNAME", username);
         }
-        catch (Exception e){
+        catch (Exception e) {
             logger.error("Error en el inventario");
+        }
+            return list;
+
+        }
+
+    @Override
+    public void updateUserUsername(String username, String new_username) {
+        Session session = null;
+        User user = null;
+        try{
+            session = FactorySession.openSession();
+            session.update(User.class, "USERNAME", new_username,"USERNAME",username);
+        }
+        catch (Exception e){
+            logger.error("Error");
         }
         finally {
             session.close();
         }
-        return list;
 
     }
+
+    @Override
+    public void updateUserPassword(String username, String new_password) {
+        Session session = null;
+        User user = null;
+        try {
+            session = FactorySession.openSession();
+            session.update(User.class, "PASSWORD", new_password, "USERNAME", username);
+        } catch (Exception e) {
+            logger.error("Error");
+        } finally {
+            session.close();
+        }
+    }
+
+
 
     public Item getItem(String name)
     {
@@ -212,12 +266,26 @@ public class UserManagerDAOImpl implements UserManagerDAO {
             item1 = (Item)session.get(Inventory.class, "NAME", name);
         }
         catch (Exception e) {
-            logger.error("Something went wrong: "+e.getMessage());
+            logger.error("Something went wrong: " + e.getMessage());
+        }
+        return item1;
+
+    }
+
+    @Override
+    public void updateUserEmail(String username, String new_email) {
+        Session session = null;
+        User user = null;
+        try{
+            session = FactorySession.openSession();
+            session.update(User.class, "EMAIL", new_email,"USERNAME",username);
+        }
+        catch (Exception e){
+            logger.error("Error");
         }
         finally {
             session.close();
         }
 
-        return item1;
     }
 }

@@ -1,5 +1,6 @@
 package edu.upc.dsa.mysql;
 
+import edu.upc.dsa.models.LogInParams;
 import edu.upc.dsa.models.User;
 import edu.upc.dsa.util.ObjectHelper;
 import edu.upc.dsa.util.QueryHelper;
@@ -185,8 +186,38 @@ public class SessionImpl implements Session {
     }
 
     public void delete(Object object) {
+        /*String insertQuery = QueryHelper.createQueryDELETE(object);
+
+        PreparedStatement pstm = null;
+
+        try {
+            pstm = conn.prepareStatement(insertQuery);
+            pstm.setObject(1, 0);
+        }
+        catch (Exception e) {
+        }*/
 
     }
+
+
+    public int deleteUser(String username) {
+        String insertQuery = QueryHelper.createQueryDeleteUser(username);
+        PreparedStatement pstm = null;
+
+        try {
+            pstm = conn.prepareStatement(insertQuery);
+            pstm.executeQuery();
+
+            return 1;
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+    }
+
     public void saveUser(Object entity) {
 
         String insertQuery = QueryHelper.createQueryINSERT_Encrypted(entity);

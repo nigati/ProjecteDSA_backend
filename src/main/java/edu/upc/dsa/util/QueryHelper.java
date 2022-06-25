@@ -1,6 +1,9 @@
 package edu.upc.dsa.util;
 
+import edu.upc.dsa.models.LogInParams;
+
 import java.util.HashMap;
+import java.util.Objects;
 
 public class QueryHelper {
 
@@ -54,11 +57,20 @@ public class QueryHelper {
     public static String createQueryUPDATE(Class clase, String SET, String Where) {
         StringBuffer sb = new StringBuffer();
         sb.append("UPDATE ").append(clase.getSimpleName());
-        sb.append(" SET ").append(SET);
-        sb.append(" = ? ");
-        sb.append(" WHERE ");
-        sb.append(Where);
-        sb.append(" = ?");
+        if (Objects.equals(SET, "PASSWORD")){
+            sb.append(" SET ").append(SET);
+            sb.append(" = MD5(?) ");
+            sb.append(" WHERE ");
+            sb.append(Where);
+            sb.append(" = ?");
+        }
+        else{
+            sb.append(" SET ").append(SET);
+            sb.append(" = ? ");
+            sb.append(" WHERE ");
+            sb.append(Where);
+            sb.append(" = ?");
+        }
 
         //UPDATE personas
         //SET apellido2 = 'RODRIGUEZ'
@@ -132,5 +144,18 @@ public class QueryHelper {
 
         return sb.toString();
     }
-
+    public static String createQueryDELETE(Object object) {
+        /*StringBuffer sb = new StringBuffer();
+        sb.append("DELETE FROM ");
+        sb.append(object.getClass().getSimpleName()).append(" ");
+        sb.append(" WHERE ").append("username = '").append(logInParams.username).append("'");
+        return sb.toString();*/
+        return null;
+    }
+    public static String createQueryDeleteUser(String username) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("DELETE FROM User ");
+        sb.append(" WHERE ").append("username = '").append(username).append("'");
+        return sb.toString();
+    }
 }

@@ -136,6 +136,7 @@ public class UserService {
     })
 
     @Path("/{username}")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response updateUser(String username) {
 
        // User user=umd.getUser(username);
@@ -168,7 +169,76 @@ public class UserService {
         }
 
     }
+    @PUT
+    @ApiOperation(value = "update a User's username", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
 
+    @Path("/{username}/updateusername")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateUserUsername(@PathParam("username")String username,String new_username) {
+        String result = new_username.replaceAll("\"", "");
+        logger.info("I'm updating the username:"+username+" to: "+result);
+
+        umd.updateUserUsername(username,result);
+        User user= umd.getUser(username);
+        if (user==null)
+        {
+            return Response.status(404).build();
+        }
+        else {
+            return Response.status(201).build();
+        }
+
+    }
+    @PUT
+    @ApiOperation(value = "update a User's password", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+
+    @Path("/{username}/updatepassword")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateUserPassword(@PathParam("username")String username,String new_password) {
+        String result = new_password.replaceAll("\"", "");
+        logger.info("I'm updating the "+username+" password to: "+result);
+        umd.updateUserPassword(username,result);
+        User user= umd.getUser(username);
+        if (user==null)
+        {
+            return Response.status(404).build();
+        }
+        else {
+            return Response.status(201).build();
+        }
+
+    }
+    @PUT
+    @ApiOperation(value = "update a User's email", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+
+    @Path("/{username}/updateemail")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateUserEmail(@PathParam("username")String username,String new_email) {
+        String result = new_email.replaceAll("\"", "");
+        logger.info("I'm updating the "+username+" email to: "+result);
+        umd.updateUserEmail(username,result);
+        User user= umd.getUser(username);
+        if (user==null)
+        {
+            return Response.status(404).build();
+        }
+        else {
+            return Response.status(201).build();
+        }
+
+    }
     @PUT
     @ApiOperation(value = "buy Item from shop", notes = "asdasd")
     @ApiResponses(value = {
@@ -205,6 +275,22 @@ public class UserService {
         if (user == null) return Response.status(404).build();
         return Response.status(201).entity(user).build();
 
+    }
+    @DELETE
+    @ApiOperation(value = "delete a User", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response= User.class),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    @Path("/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteUser(@PathParam("username")String username) {
+
+        int i = umd.deleteUser(username);
+        if (i == 0) return Response.status(404).build();
+        else {
+            return Response.status(201).build();
+        }
     }
 
 
