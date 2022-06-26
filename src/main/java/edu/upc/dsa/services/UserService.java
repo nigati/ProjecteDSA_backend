@@ -306,6 +306,7 @@ public class UserService {
     public Response getInventory(@PathParam("username")String username) {
 
         List<Inventory> itemsInventory=umd.getInventory(username);
+        logger.info(itemsInventory);
 //        List<Item> itemsInventory = new ArrayList<>();
 //        int i=0;
 //        while (i<itemsInventoryAux.size())
