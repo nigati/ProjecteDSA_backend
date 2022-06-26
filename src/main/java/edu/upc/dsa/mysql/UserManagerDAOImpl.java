@@ -184,6 +184,7 @@ public class UserManagerDAOImpl implements UserManagerDAO {
                 if (repetido == false)
                 {
                     session.save(new Inventory(item,username));
+                    session.update2(Inventory.class, "QUANTITY", String.valueOf(1),"USERNAME",username, "NAME", item);
                 }
 
                 user1= (User)session.get(User.class,"USERNAME", username); //sale actualizado
