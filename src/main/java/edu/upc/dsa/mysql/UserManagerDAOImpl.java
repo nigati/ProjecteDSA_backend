@@ -177,19 +177,40 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         Item i1=null;
         User user0 = null;
         User user2=null;
+        Boolean repetido = false;
 
         try {
             session = FactorySession.openSession();
             user0 = (User)session.get(User.class, "USERNAME",username);
+            logger.info(user0.getUsername());
             i1 = (Item) session.get(Item.class, "NAME", item);
+            List<Inventory> list = new ArrayList<>();
 
             if (user0.getCoins()>= i1.getCoins())
             {
                 int saldo = user0.getCoins()- i1.getCoins();
                 session.update(User.class, "COINS", String.valueOf(saldo),"USERNAME",username);
-                session.save(new Inventory(item,username));
-                user1= (User)session.get(User.class,"USERNAME", username);
-                logger.info("2 " +user1.getCoins());
+                list = (List<Inventory>)session.getList(Inventory.class, "USERNAME", username);
+                int i=0;
+                while (i< list.size())
+                {
+                    if (list.get(i).getName().equals(item))
+                    {
+                        repetido = true;
+                        int qty = list.get(i).getQuantity() +1;
+                        session.update2(Inventory.class, "QUANTITY", String.valueOf(qty),"USERNAME",username, "NAME", item);
+                    }
+                    i++;
+                }
+                if (repetido == false)
+                {
+                    session.save(new Inventory(item,username));
+                    session.update2(Inventory.class, "QUANTITY", String.valueOf(1),"USERNAME",username, "NAME", item);
+                }
+
+                user1= (User)session.get(User.class,"USERNAME", username); //sale actualizado
+//                logger.info("2 " +user1.getCoins());
+//                logger.info(user1.getUsername());
 
             }
             else
@@ -314,4 +335,5 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         }
 
     }
+
 }

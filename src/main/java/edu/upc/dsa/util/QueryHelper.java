@@ -79,6 +79,35 @@ public class QueryHelper {
         return sb.toString();
     }
 
+
+    public static String createQueryUPDATE2(Class clase, String SET, String Where, String Where2) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("UPDATE ").append(clase.getSimpleName());
+        if (Objects.equals(SET, "PASSWORD")){
+            sb.append(" SET ").append(SET);
+            sb.append(" = MD5(?) ");
+            sb.append(" WHERE ");
+            sb.append(Where);
+            sb.append(" = ?");
+        }
+        else{
+            sb.append(" SET ").append(SET);
+            sb.append(" = ? ");
+            sb.append(" WHERE ");
+            sb.append(Where);
+            sb.append(" = ? ");
+            sb.append(" AND ");
+            sb.append(Where2);
+            sb.append(" = ?");
+        }
+
+        //UPDATE personas
+        //SET apellido2 = 'RODRIGUEZ'
+        //WHERE nombre = 'ANTONIO'
+
+        return sb.toString();
+    }
+
     public static String createQuerySELECTAll(Class clase){
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT * FROM ").append(clase.getSimpleName());

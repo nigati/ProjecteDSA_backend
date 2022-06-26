@@ -185,6 +185,47 @@ public class SessionImpl implements Session {
 
     }
 
+
+    public void update2(Class theClass, String SET, String valueSET, String WHERE, String valueWHERE, String WHERE2, String valueWHERE2) {
+        String updateQuery = QueryHelper.createQueryUPDATE2(theClass, SET, WHERE, WHERE2);
+        //System.out.println(updateQuery);
+        ResultSet rs;
+        PreparedStatement pstm;
+
+        //boolean empty = true;
+
+        try {
+            pstm = conn.prepareStatement(updateQuery);
+            pstm.setObject(1, valueSET); //son los ?
+            pstm.setObject(2, valueWHERE);
+            pstm.setObject(3, valueWHERE2);
+            pstm.executeQuery();
+//            rs.next();
+//            ResultSetMetaData rsmd = rs.getMetaData();
+//
+//            int numberOfColumns = rsmd.getColumnCount();
+//
+//            Object o = theClass.newInstance();
+//            int i=1;
+//            while (i<=numberOfColumns)
+//            {
+//                ObjectHelper.setter(o, rsmd.getColumnName(i), rs.getObject(i));
+//                i++;
+//            }
+//            return o;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+//         catch (InstantiationException e) {
+//            throw new RuntimeException(e);
+//        } catch (IllegalAccessException e) {
+//            throw new RuntimeException(e);
+//        }
+        //return null;
+
+    }
+
     public void delete(Object object) {
         /*String insertQuery = QueryHelper.createQueryDELETE(object);
 

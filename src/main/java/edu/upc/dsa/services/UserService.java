@@ -14,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.models.auth.In;
 import org.apache.log4j.Logger;
 
 import javax.ws.rs.*;
@@ -301,22 +302,22 @@ public class UserService {
     @GET
     @ApiOperation(value = "get Inventory from username", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response= Item.class, responseContainer="List"),
+            @ApiResponse(code = 201, message = "Successful", response= Inventory.class, responseContainer="List"),
 
     })
     @Path("inventory/{username}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getInventory(@PathParam("username")String username) {
 
-        List<Inventory> itemsInventoryAux=umd.getInventory(username);
-        List<Item> itemsInventory = new ArrayList<>();
-        int i=0;
-        while (i<itemsInventoryAux.size())
-        {
-            itemsInventory.add(umd.getItem(itemsInventoryAux.get(i).getName()));
-            i++;
-        }
-        GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(itemsInventory) {};
+        List<Inventory> itemsInventory=umd.getInventory(username);
+//        List<Item> itemsInventory = new ArrayList<>();
+//        int i=0;
+//        while (i<itemsInventoryAux.size())
+//        {
+//            itemsInventory.add(umd.getItem(itemsInventoryAux.get(i).getName()));
+//            i++;
+//        }
+        GenericEntity<List<Inventory>> entity = new GenericEntity<List<Inventory>>(itemsInventory) {};
         if (itemsInventory.size() == 0) return Response.status(404).build();
         return Response.status(201).entity(entity).build();
 
