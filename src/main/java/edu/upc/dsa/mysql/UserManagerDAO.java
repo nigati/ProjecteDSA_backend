@@ -21,6 +21,7 @@ public interface UserManagerDAO {
 
 
     public List<Inventory> getInventory(String username);
+    public void useItemInGame(String name, String username);
 
     public Item getItem(String name);
 

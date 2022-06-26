@@ -317,13 +317,19 @@ public class UserService {
         GenericEntity<List<Inventory>> entity = new GenericEntity<List<Inventory>>(itemsInventory) {};
         if (itemsInventory.size() == 0) return Response.status(404).build();
         return Response.status(201).entity(entity).build();
-
-
-
     }
 
+    @PUT
+    @ApiOperation(value = "update Inventory when used in game", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
 
-
-
+    })
+    @Path("/{username}/useItemInGame")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateInventory(Inventory inventory) {
+        umd.useItemInGame(inventory.getName(), inventory.getUsername());
+        return Response.status(201).build();
+    }
 
 }
