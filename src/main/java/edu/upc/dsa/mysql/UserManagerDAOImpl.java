@@ -1,8 +1,7 @@
 package edu.upc.dsa.mysql;
 
 import edu.upc.dsa.UserManager;
-import edu.upc.dsa.models.Inventory;
-import edu.upc.dsa.models.Item;
+import edu.upc.dsa.models.*;
 
 
 import java.util.ArrayList;
@@ -15,8 +14,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import edu.upc.dsa.models.LogInParams;
-import edu.upc.dsa.models.User;
 //import jdk.jpackage.internal.Log;
 import org.apache.log4j.Logger;
 
@@ -86,6 +83,30 @@ public class UserManagerDAOImpl implements UserManagerDAO {
 
     }
 
+    public int addIssue(Issue issue) {
+
+        Session session = null;
+
+        try{
+            session = FactorySession.openSession();
+            session.save(issue);
+            /*boolean alreadyreg =session.isUserRegistered(User.class, user);
+            if (!alreadyreg){session.save(user);}
+            else {logger.warn("User is already registered");}*/
+
+
+        }
+        catch (Exception e){
+            logger.error("Something happened trying to open the session: "+e.getMessage());
+            return 0;
+        }
+
+        finally{
+            session.close();
+
+        }
+        return 1;
+    }
 
 
     @Override

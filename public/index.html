@@ -10,10 +10,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
-           let logged = localStorage.getItem("isLogged")
-           if(logged === "true"){
-              location.href = "catalogue/index.html"
-           }
+            let logged = localStorage.getItem("isLogged")
+            if(logged === "false"){
+                location.href = "catalogue/index.html"
+            }
 
         });
 

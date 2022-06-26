@@ -9,23 +9,33 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <style>
+        .fa-coins {
+            font-size: 16px;
+            color: #F7CA0C;
+        }
+    </style>
     <script>
 
         $(document).ready(function () {
 
-            if(localStorage.getItem("isLogged")==="false"){
+            if (localStorage.getItem("isLogged") === "false") {
                 location.href = "/index.html"
             }
             let username = localStorage.getItem("username");
             $("#userName").text(username);
-            var url = "/dsaApp/users/catalogo";
+            let url = "/dsaApp/users/catalogo";
             $.get(url, function (data, status) {
-                for (var key=0, size = data.length; key<size; key++)
-                {
-                    $("#tabla").append("<tr><td>" + data[key].name +"</td><td>"+ data[key].description +"</td><td>"+data[key].coins+ "</td></tr>");
+                for (let key = 0, size = data.length; key < size; key++) {
+                    $("#table-body").append("<tr><td>" + data[key].name + "</td><td>" + data[key].description + "</td><td>" + data[key].coins + "<i class='fas fa-coins pl-2' style=\"font-size: 16px;color: #F7CA0C;\"></i></td><td><a id='btn-buy' class='btn btn-info'>Buy</a> </td></tr>");
 
                 }
-                });
+            });
+            $("#btn-buy").click(function (){
+
+            })
         });
 
 
@@ -37,45 +47,152 @@
         <li class="nav-item active">
             <a class="nav-link" href="#">Active</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-        </li>
     </ul>
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" id="userName" href="#">Right</a>
+                <a class="navbar-brand" id="ff" href="#">Shop</a>
+            </li>
+        </ul>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="navbar-brand" id="userName" href="#">user</a>
             </li>
         </ul>
     </div>
 </nav>
-<div class="jumbotron text-center">
-    <h1>CATALOGUE</h1>
+
+<div class="d-flex justify-content-between m-3">
+    <div></div>
+    <div>
+        <h3>This is the list of Items available</h3>
+    </div>
+
+    <div class="p-2 border rounded bg-light mt-10">
+        <div class="row">
+            <div class="col px-2">
+                <i class='fas fa-coins' style="font-size: 24px;color: #F7CA0C;"></i>
+            </div>
+            <div class="col px-2">
+                345
+            </div>
+        </div>
+    </div>
 </div>
-
-<!--<div class="container-md">-->
-<!--    <div class="form-group">-->
-<!--        <label for="usr">Usuario:</label>-->
-<!--        <input type="text" class="form-control" id="usr">-->
-<!--    </div>-->
-<!--    <button type="button" class="btn btn-info " id="boton">Buscar</button>-->
-<!--</div>-->
-
-<div class="container">
-    <h3>This is the list of Items available</h3>
-    <table class="table table-striped" id="tabla">
+<div class="p-10 container" id="main-container">
+    <table class="table">
         <thead>
         <tr>
-            <th>Item name</th>
-            <th>Description</th>
-            <th>Price</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col"></th>
         </tr>
         </thead>
-        <tbody>
-
+        <tbody id="table-body">
+        <!--<tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>
+                345<i class='fas fa-coins pl-2'></i>
+            </td>
+            <td><a class="btn btn-info">press</a></td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+            <td><a class="btn btn-info">press</a></td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>@twitter</td>
+            <td><a class="btn btn-info">press</a></td>
+        </tr>-->
         </tbody>
-
     </table>
+    <!--<div class="row my-5">
+        <div class="col-2"></div>
+        <div class="col shadow">
+            <div class="card border-0 p-3">
+                <div class="row">
+                    <div class="col">
+                        <img class="card-img" alt="Card image" style="width:100%">
+                    </div>
+                    <div class="col">
+                        <h4 class="card-title">John Doe</h4>
+                        <p class="card-text">Some example text some example text. John Doe is an architect and
+                            engineer</p>
+                        <a href="#" class="btn btn-primary">See Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+        <div class="col shadow">
+            <div class="card border-0 p-3">
+                <div class="row">
+                    <div class="col">
+                        <img class="card-img-" alt="Card image" style="width:100%">
+                    </div>
+                    <div class="col">
+                        <h4 class="card-title">John Doe</h4>
+                        <p class="card-text">Some example text some example text. John Doe is an architect and
+                            engineer</p>
+                        <a href="#" class="btn btn-primary">See Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col shadow">
+            <div class="card border-0 p-3">
+                <div class="row">
+                    <div class="col">
+                        <img class="card-img-" alt="Card image" style="width:100%">
+                    </div>
+                    <div class="col">
+                        <h4 class="card-title">John Doe</h4>
+                        <p class="card-text">Some example text some example text. John Doe is an architect and
+                            engineer. he is awesome, jkfkdh</p>
+                        <div class="col px-2">
+                            <i class='fas fa-coins'></i>
+                        </div>
+                        <div class="col px-2">
+                            345
+                        </div>
+                        <a href="#" class="btn btn-primary">See Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+        <div class="col shadow">
+            <div class="card border-0 p-3">
+                <div class="row">
+                    <div class="col">
+                        <img class="card-img-" alt="Card image" style="width:100%">
+                    </div>
+                    <div class="col">
+                        <h4 class="card-title">John Doe</h4>
+                        <p class="card-text">Some example text some example text. John Doe is an architect and
+                            engineer</p>
+                        <a href="#" class="btn btn-primary">See Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>-->
 </div>
 
 </body>

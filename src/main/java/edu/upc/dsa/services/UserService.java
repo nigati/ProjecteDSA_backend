@@ -91,14 +91,18 @@ public class UserService {
     @POST
     @ApiOperation(value="Retrieve issues", notes = "minim2")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful")
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 401, message = "Insert error")
     })
 
-    @Path("/issue")
+    @Path("/{username}/issue")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response issues(Issue issue){
-        System.out.println("issue date: " + issue.getDate() + "; Informer: " + issue.getInformer() + "; Message: " + issue.getMessage());
-        return Response.status(201).build();
+    public Response issues(@PathParam("username")String username,Issue issue){
+        User u = umd.getUser(username);
+        issue.setUser_id(u.getId());
+        if(umd.addIssue(issue) == 1)
+            return Response.status(201).build();
+        return Response.status(401).build();
     }
 
 
