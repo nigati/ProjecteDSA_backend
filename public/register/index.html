@@ -13,36 +13,36 @@
         $(document).ready(function () {
             //alert("Hola");
             $("#botonRegistro").click(function () {
-            let email1 = $("#email").val();
-            let pass1= $("#password").val();
-            let email2 = $("#email2").val();
-            let pass2= $("#password2").val();
-            if ((email1).match(email2) && (pass1).match(pass2))
-            {
-                let dataBody=
+                let email1 = $("#email").val();
+                let pass1= $("#password").val();
+                let email2 = $("#email2").val();
+                let pass2= $("#password2").val();
+                if ((email1).match(email2) && (pass1).match(pass2))
                 {
-                    username: $("#usrname").val(),
-                    email: $("#email").val(),
-                    password: $("#password").val()
-                }
-                let URL = "/dsaApp/users/register";
-                 $.post({
-                    url: URL,
-                    data: JSON.stringify(dataBody),
-                    contentType: 'application/json; charset=utf-8'
-                })
-                    .done(function (data, status) {
-                        location.href = "/index.html"
+                    let dataBody=
+                        {
+                            username: $("#usrname").val(),
+                            email: $("#email").val(),
+                            password: $("#password").val()
+                        }
+                    let URL = "/dsaApp/users/register";
+                    $.post({
+                        url: URL,
+                        data: JSON.stringify(dataBody),
+                        contentType: 'application/json; charset=utf-8'
                     })
-                    .fail(function (xhr, err) {
-                        alert("Something went wrong");
-                        location.reload();
-                   })
-            }
-            else
-            {
-                alert("Password and email do not match");
-            }
+                        .done(function (data, status) {
+                            location.href = "/index.html"
+                        })
+                        .fail(function (xhr, err) {
+                            alert("Something went wrong");
+                            location.reload();
+                        })
+                }
+                else
+                {
+                    alert("Password and email do not match");
+                }
             });
         });
     </script>

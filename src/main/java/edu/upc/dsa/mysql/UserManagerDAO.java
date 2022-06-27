@@ -1,9 +1,6 @@
 package edu.upc.dsa.mysql;
 
-import edu.upc.dsa.models.Inventory;
-import edu.upc.dsa.models.Item;
-import edu.upc.dsa.models.LogInParams;
-import edu.upc.dsa.models.User;
+import edu.upc.dsa.models.*;
 
 import java.util.List;
 
@@ -18,7 +15,7 @@ public interface UserManagerDAO {
     public User buyItem (String i, String username);
     public void updateUserLanguage(String username, String language);
 
-
+    public int addIssue(Issue issue);
 
     public List<Inventory> getInventory(String username);
     public void useItemInGame(String name, String username);

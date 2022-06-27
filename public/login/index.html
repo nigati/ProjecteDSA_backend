@@ -14,15 +14,15 @@
             //alert("Hola");
             $("#botonLogIn").click(function () {
                 var dataBody=
-                {
-                    username: $("#usr").val(),
-                    password: $("#pass").val(),
+                    {
+                        username: $("#usr").val(),
+                        password: $("#pass").val(),
 
-                }
+                    }
 
                 var URL = "/dsaApp/users/login";
                 //alert(url);
-                 $.post({
+                $.post({
                     url: URL,
                     data: JSON.stringify(dataBody),
                     contentType: 'application/json; charset=utf-8'

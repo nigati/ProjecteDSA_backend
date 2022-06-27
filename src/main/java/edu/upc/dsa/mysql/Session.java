@@ -19,6 +19,7 @@ public interface Session<E> {
     void update(Class theClass, String SET, String valueSET, String WHERE, String valueWHERE);
     void delete(Object object);
     int deleteUser(String username);
+
     boolean isUserRegistered(Class class1, User user);
     List<Object> findAll(Class theClass);
     List<Object> findAll(Class theClass, HashMap params);
