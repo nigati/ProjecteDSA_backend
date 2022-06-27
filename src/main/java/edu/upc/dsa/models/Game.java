@@ -8,14 +8,19 @@ public class Game {
     public int coins;
     public int kills;
 
+
+
+    public int time;
+
     public Game(){}
-    public Game(int id, String username, int hp, int level, int coins, int kills ) {
+    public Game(int id, String username, int hp, int level, int coins, int kills, int time ) {
         this.id=id;
         this.username=username;
         this.hp=hp;
         this.level=level;
         this.coins=coins;
         this.kills=kills;
+        this.time=time;
     }
     public int getID()
     {
@@ -53,5 +58,8 @@ public class Game {
         return kills;
     }
     public void setKills(int kills){ this.kills=kills;}
+
+    public int getTime() {return time;}
+    public void setTime(int time) {this.time = time;}
 
 }

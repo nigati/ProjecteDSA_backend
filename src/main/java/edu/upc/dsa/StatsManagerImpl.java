@@ -1,8 +1,6 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.Stats;
-import edu.upc.dsa.models.User;
 import org.apache.log4j.Logger;
 
 import java.util.Comparator;
@@ -40,7 +38,7 @@ public class StatsManagerImpl implements StatsManager{
         stats.add(new Stats("barto",23,"https://t1.ea.ltmcdn.com/es/posts/7/1/5/los_35_animales_mas_tiernos_del_mundo_24517_orig.jpg"));
         stats.add(new Stats("nico",8,"https://cdn.pixabay.com/photo/2017/07/11/15/51/kermit-2493979_1280.png"));
 
-        stats.sort(Comparator.comparingDouble(Stats::getPoints).reversed());
+        stats.sort(Comparator.comparingDouble(Stats::getTime).reversed());
         logger.info("Estadisticas cargadas completamente");
         return stats;
 

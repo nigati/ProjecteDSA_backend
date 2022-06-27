@@ -3,6 +3,8 @@ import edu.upc.dsa.*;
 import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.Stats;
 import edu.upc.dsa.mysql.ItemManagerDAOImpl;
+import edu.upc.dsa.mysql.StatsManagerDAO;
+import edu.upc.dsa.mysql.StatsManagerDAOImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -17,10 +19,10 @@ import java.util.List;
 @Api(value = "/stats", description = "Endpoint to item Service")
 @Path("/stats")
 public class StatsService {
-    private StatsManager sm;
+    private StatsManagerDAO smd;
 
     public StatsService() {
-        this.sm = StatsManagerImpl.getInstance();
+        this.smd = StatsManagerDAOImpl.getInstance();
 
     }
 
@@ -33,7 +35,7 @@ public class StatsService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRanking() {
 
-        List<Stats> stats = this.sm.getRanking();
+        List<Stats> stats = this.smd.getAll();
         GenericEntity<List<Stats>> entity = new GenericEntity<List<Stats>>(stats) {};
         return Response.status(201).entity(entity).build()  ;
 
