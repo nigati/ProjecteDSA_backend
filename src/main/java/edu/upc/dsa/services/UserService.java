@@ -121,7 +121,7 @@ public class UserService {
 
         //System.out.println("PARAMETROS "+loginpar.getUsername()+" ===> "+loginpar.getPassword());
             User u = this.umd.login(loginpar);
-            User u2 = this.um.login(loginpar.getUsername(),loginpar.getPassword());
+            //User u2 = this.um.login(loginpar.getUsername(),loginpar.getPassword());
             if (u!= null) {
                 return Response.status(201).entity(u).build();
             }
