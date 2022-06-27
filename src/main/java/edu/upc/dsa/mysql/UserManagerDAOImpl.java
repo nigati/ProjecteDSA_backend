@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 //import jdk.jpackage.internal.Log;
+import io.swagger.models.auth.In;
 import org.apache.log4j.Logger;
 
 
@@ -204,7 +205,7 @@ public class UserManagerDAOImpl implements UserManagerDAO {
                 }
                 if (repetido == false)
                 {
-                    session.save(new Inventory(item,username));
+                    session.save(new Inventory(item,username, i1.getUrlPic()));
                     session.update2(Inventory.class, "QUANTITY", String.valueOf(1),"USERNAME",username, "NAME", item);
                 }
 
@@ -334,6 +335,34 @@ public class UserManagerDAOImpl implements UserManagerDAO {
             session.close();
         }
 
+    }
+
+    public void useItemInGame(String name, String username)
+    {
+        Session session = null;
+        User user = null;
+        try{
+            session = FactorySession.openSession();
+            //Item i = (Item)session.get(Item.class, "NAME", name);
+            Inventory inv = (Inventory)session.get(Inventory.class, "NAME", name);
+            String qty = String.valueOf(inv.getQuantity()-1);
+            logger.info("New quantity is :" + qty);
+            if (inv.getQuantity()-1>=0)
+            {
+                session.update2(Inventory.class, "QUANTITY",qty,"NAME",name, "USERNAME", username);
+            }
+            else
+            {
+                logger.info("No tienes este item, no puedes usarlo");
+            }
+
+        }
+        catch (Exception e){
+            logger.error("Error");
+        }
+        finally {
+            session.close();
+        }
     }
 
 }
