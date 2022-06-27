@@ -301,7 +301,7 @@ public class UserService {
             @ApiResponse(code = 201, message = "Successful", response= Inventory.class, responseContainer="List"),
 
     })
-    @Path("inventory/{username}")
+    @Path("{username}/inventory")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getInventory(@PathParam("username")String username) {
 
