@@ -34,7 +34,6 @@ public class StatsService {
     public Response getRanking() {
 
         List<Stats> stats = this.sm.getRanking();
-
         GenericEntity<List<Stats>> entity = new GenericEntity<List<Stats>>(stats) {};
         return Response.status(201).entity(entity).build()  ;
 
