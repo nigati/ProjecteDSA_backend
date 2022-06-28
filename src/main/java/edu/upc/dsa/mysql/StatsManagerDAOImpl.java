@@ -23,8 +23,28 @@ public class StatsManagerDAOImpl implements StatsManagerDAO {
         return instance;}
 
     @Override
-    public int updateStats(Game game) {
-        return 0;
+    public void addStats(Game game) {
+
+        Session session = null;
+//        Stats stats = null;
+//        Stats stats1 = null;
+
+        try {
+            session = FactorySession.openSession();
+            //stats = (Stats)session.get(Stats.class, "USERNAME", game.getUsername());
+            Stats stats2 = new Stats(game.getUsername(),game.getTime(), game.getKills(), game.getLevel());
+            session.save(stats2);
+//            session.update(Stats.class, "TIME", String.valueOf(game.getTime()), "USERNAME", game.getUsername());
+//            session.update(Stats.class, "LEVEL", String.valueOf(game.getLevel()), "USERNAME", game.getUsername());
+//            session.update(Stats.class, "ENEMIESKILLED", String.valueOf(game.getKills()), "USERNAME", game.getUsername());
+//            stats1 = (Stats)session.get(Stats.class, "USERNAME", game.getUsername());
+        }
+        catch (Exception e) {
+            logger.error("Something went wrong: "+e.getMessage());
+        }
+        finally {
+            session.close();
+        }
     }
 
     @Override
@@ -49,18 +69,37 @@ public class StatsManagerDAOImpl implements StatsManagerDAO {
     }
 
     @Override
-    public List<Stats> getAll() {
-        logger.info("Getting the stats of all players");
+    public List<Stats> getAllSortedByTime() {
+        logger.info("Getting the stats of all players and sorting by best times");
         Session session = null;
         List<Stats> stats= new ArrayList<>();
         try{
             session = FactorySession.openSession();
             stats =(List<Stats>)session.findAll(Stats.class);
-            stats.sort(Comparator.comparingDouble(Stats::getTime).reversed());
-            return stats ;
+            stats.sort(Comparator.comparingDouble(Stats::getTime));
+            List<Stats> stat1 =stats.subList(0,10);
+            return stat1 ;
         } catch (Exception e) {
             logger.error("Something happened trying to open the session: " + e.getMessage());
             return null;
         }
+    }
+
+    public List<Stats> getAllSortedByKills()
+    {
+        logger.info("Getting the stats of all players and sorting by enemies killed");
+        Session session = null;
+        List<Stats> stats= new ArrayList<>();
+        try{
+            session = FactorySession.openSession();
+            stats =(List<Stats>)session.findAll(Stats.class);
+            stats.sort(Comparator.comparingDouble(Stats::getEnemiesKilled).reversed());
+            List<Stats> stat1 = stats.subList(0,10);
+            return stat1 ;
+        } catch (Exception e) {
+            logger.error("Something happened trying to open the session: " + e.getMessage());
+            return null;
+        }
+
     }
 }

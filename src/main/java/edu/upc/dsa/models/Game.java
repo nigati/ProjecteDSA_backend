@@ -3,30 +3,25 @@ package edu.upc.dsa.models;
 public class Game {
     public int id;
     public String username;
-    public int hp;
+    //public int hp;
     public int level;
     public int coins;
     public int kills;
-
-
-
     public int time;
 
     public Game(){}
-    public Game(int id, String username, int hp, int level, int coins, int kills, int time ) {
-        this.id=id;
+    public Game(String username, int level, int coins, int kills, int time ) {
         this.username=username;
-        this.hp=hp;
         this.level=level;
         this.coins=coins;
         this.kills=kills;
         this.time=time;
     }
-    public int getID()
+    public int getId()
     {
         return id;
     }
-    public void setName(int id){
+    public void setId(int id){
         this.id = id;
     }
 
@@ -39,10 +34,10 @@ public class Game {
         this.username = username;
     }
 
-    public int getHp(){
-        return hp;
-    }
-    public void setHp(int hp){ this.hp=hp;}
+    //public int getHp(){
+        //return hp;
+    //}
+    //public void setHp(int hp){ this.hp=hp;}
 
     public int getLevel(){
         return level;
@@ -50,9 +45,9 @@ public class Game {
     public void setLevel(int level){ this.level=level;}
 
     public int getCoins(){
-        return hp;
+        return coins;
     }
-    public void setCoins(int hp){ this.hp=hp;}
+    public void setCoins(int coins){ this.coins=coins;}
 
     public int getKills(){
         return kills;

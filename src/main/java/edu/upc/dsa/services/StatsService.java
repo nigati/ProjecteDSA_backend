@@ -31,11 +31,26 @@ public class StatsService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Stats.class, responseContainer="List"),
     })
-    @Path("/ranking")
+    @Path("/rankingTime")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getRanking() {
+    public Response getRankingByTime() {
 
-        List<Stats> stats = this.smd.getAll();
+        List<Stats> stats = this.smd.getAllSortedByTime();
+        GenericEntity<List<Stats>> entity = new GenericEntity<List<Stats>>(stats) {};
+        return Response.status(201).entity(entity).build()  ;
+
+    }
+
+    @GET
+    @ApiOperation(value = "get ranking from best to worst", notes = "minim2 Claudia")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Stats.class, responseContainer="List"),
+    })
+    @Path("/rankingKills")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRankingByKills() {
+
+        List<Stats> stats = this.smd.getAllSortedByKills();
         GenericEntity<List<Stats>> entity = new GenericEntity<List<Stats>>(stats) {};
         return Response.status(201).entity(entity).build()  ;
 

@@ -22,8 +22,10 @@ import java.util.List;
 public class GameService {
     final static Logger logger = Logger.getLogger(ForumService.class);
     private GameManagerDAO gameManagerDAO;
+    private StatsManagerDAO statsManagerDAO;
     public GameService() {
         this.gameManagerDAO = GameManagerDAOImpl.getInstance();
+        this.statsManagerDAO=StatsManagerDAOImpl.getInstance();
     }
 
 
@@ -39,6 +41,7 @@ public class GameService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response saveGame (Game game) {
         int i = this.gameManagerDAO.saveGame(game);
+        this.statsManagerDAO.addStats(game);
         if (i==1){
             return Response.status(201).build();
         }

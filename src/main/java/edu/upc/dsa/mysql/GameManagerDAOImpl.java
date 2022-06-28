@@ -31,7 +31,7 @@ public class GameManagerDAOImpl implements GameManagerDAO {
         try {
             session = FactorySession.openSession();
             session.save(game);
-            logger.info("The game with id: " + game.getID() + " is being inserted");
+            logger.info("The game with id: " + game.getId() + " is being inserted");
             return 1;
         } catch (Exception e) {
             logger.error("Something happened trying to open the session: " + e.getMessage());
