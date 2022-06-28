@@ -29,16 +29,46 @@
             let url = "/dsaApp/users/catalogo";
             $.get(url, function (data, status) {
                 for (let key = 0, size = data.length; key < size; key++) {
-                    $("#table-body").append("<tr><td>" + data[key].name + "</td><td>" + data[key].description + "</td><td>" + data[key].coins + "<i class='fas fa-coins pl-2' style=\"font-size: 16px;color: #F7CA0C;\"></i></td><td><a id='btn-buy " + key +"' class='btn btn-info'>Buy</a> </td></tr>");
+                    $("#table-body").append("<tr><td>" + data[key].name + "</td><td>" + data[key].description + "</td><td>" + data[key].coins + "<i class='fas fa-coins pl-2' style=\"font-size: 16px;color: #F7CA0C;\"></i></td><td><a id='button' class='btn btn-primary' >BUY</a></td></tr>");
 
                 }
             });
-            $('#table td').on('click', function () {
-               // let row = $(this).closest('tr');
-                //let name = $(row).find('td').eq(0).html();
+            // $('#table-body tr td:first a').click(function (event) {
+            //     alert($(this).text());
+            // });
+            $("#table").on('click','#button',function(){
+                // get the current row
+                var currentRow=$(this).closest("tr");
+                var call = currentRow.find("td:eq(0)").text();
+                alert(call);
+                var dataBody=
+                    {
+                        name: call,
+                        username: username,
+                        quantity: 1,
+                        urlPic: ""
 
-                alert('Name');
+                    }
+                var URL = "/dsaApp/users/buyItem";
+                $.post({
+                    url: URL,
+                    data: JSON.stringify(dataBody),
+                    contentType: 'application/json; charset=utf-8'
+                })
+                    .done(function (data, status) {
+                        //alert("Login: " + data.username + " wellcome! \nStatus: " + status);
+                        alert("Added in your inventory, check your app");
+                        location.reload();
+
+                    })
+                    .fail(function (xhr, err) {
+                        alert("Item added");
+                        //location.reload();
+                    })
+
             });
+
+
         });
 
 
@@ -99,7 +129,6 @@
             <th scope="col">Name</th>
             <th scope="col">Description</th>
             <th scope="col">Price</th>
-            <th scope="col"></th>
         </tr>
         </thead>
         <tbody id="table-body">
