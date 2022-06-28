@@ -1,21 +1,14 @@
 package edu.upc.dsa.mysql;
 
-import edu.upc.dsa.UserManager;
 import edu.upc.dsa.models.*;
 
 
 import java.util.ArrayList;
 
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.*;
-
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 //import jdk.jpackage.internal.Log;
-import io.swagger.models.auth.In;
 import org.apache.log4j.Logger;
 
 
@@ -138,7 +131,9 @@ public class UserManagerDAOImpl implements UserManagerDAO {
     }
 
     public User login(LogInParams logInParams) {
-        Session session = FactorySession.openSession();
+        Session session = null;
+        try{
+        session = FactorySession.openSession();
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("username", logInParams.getUsername());
         hashMap.put("password", logInParams.getPassword());
@@ -150,7 +145,13 @@ public class UserManagerDAOImpl implements UserManagerDAO {
             return u;
         }else if(l.size()>1){
             logger.warn("Duplicated user");
-            return null;
+            return null;}
+        }
+        catch (Exception e){
+            logger.error("Something went wrong:" +e.getMessage());
+        }
+        finally {
+            session.close();
         }
 
         logger.warn("Incorrect user name or password");
@@ -223,7 +224,7 @@ public class UserManagerDAOImpl implements UserManagerDAO {
 
         }
         catch (Exception e) {
-            // LOG
+            logger.error("Something went wrong: "+e.getMessage());
         }
         finally {
             session.close();
@@ -235,14 +236,16 @@ public class UserManagerDAOImpl implements UserManagerDAO {
 
     @Override
     public void updateUserLanguage(String username, String language) {
+
         Session session = null;
         User user = null;
         try{
+            logger.info("Updating the user: "+username+" language to:" +language);
             session = FactorySession.openSession();
             session.update(User.class, "LANGUAGE", language,"USERNAME",username);
         }
         catch (Exception e){
-            logger.error("Error");
+            logger.error("Error: "+e.getMessage());
         }
         finally {
             session.close();
@@ -275,11 +278,12 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         Session session = null;
         User user = null;
         try{
+            logger.info("Updating the user: "+username+" username to:" +new_username);
             session = FactorySession.openSession();
             session.update(User.class, "USERNAME", new_username,"USERNAME",username);
         }
         catch (Exception e){
-            logger.error("Error");
+            logger.error("Error: " +e.getMessage());
         }
         finally {
             session.close();
@@ -292,6 +296,7 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         Session session = null;
         User user = null;
         try {
+            logger.info("Updating the user: "+username+" password to:" +new_password);
             session = FactorySession.openSession();
             session.update(User.class, "PASSWORD", new_password, "USERNAME", username);
         } catch (Exception e) {
@@ -325,6 +330,7 @@ public class UserManagerDAOImpl implements UserManagerDAO {
         Session session = null;
         User user = null;
         try{
+            logger.info("Updating the user: "+username+" email to:" +new_email);
             session = FactorySession.openSession();
             session.update(User.class, "EMAIL", new_email,"USERNAME",username);
         }

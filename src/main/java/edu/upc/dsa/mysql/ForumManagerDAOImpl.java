@@ -33,13 +33,18 @@ public class ForumManagerDAOImpl implements ForumManagerDAO{
         Session session = null;
         try{
             session = FactorySession.openSession();
-            logger.info("New entry by user " + username + " added");
+            logger.info("New entry by user " + username + " being added");
             List<Object> allMessages = session.findAll(ForumMessage.class);
             Integer current_seq = allMessages.size();
             ForumMessage entry = new ForumMessage(username, Message, current_seq);
             session.save(entry);
             logger.info("Forum message added successfully.");}
-        catch (Exception e){}
+        catch (Exception e){
+            logger.error("Something went wrong: "+e.getMessage());
+        }
+        finally {
+            session.close();
+        }
     }
 
     @Override
@@ -47,7 +52,7 @@ public class ForumManagerDAOImpl implements ForumManagerDAO{
         Session session = null;
         try {
             session = FactorySession.openSession();
-            logger.info("Get all forum messages in the database.");
+            logger.info("Getting all forum messages from the database.");
             List<ForumMessage> listMessages = new LinkedList<>();
             session.findAll(ForumMessage.class).forEach(entry -> {
                 listMessages.add((ForumMessage) entry);
@@ -55,9 +60,11 @@ public class ForumManagerDAOImpl implements ForumManagerDAO{
             return listMessages;
         }
         catch (Exception e){
+            logger.error("Something went wrong: "+e.getMessage());
             return null;
         }
+        finally {
+            session.close();
+        }
     }
-
-
 }

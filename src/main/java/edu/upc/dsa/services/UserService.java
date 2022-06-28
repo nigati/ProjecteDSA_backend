@@ -1,10 +1,6 @@
 package edu.upc.dsa.services;
 
 
-import edu.upc.dsa.StatsManager;
-import edu.upc.dsa.StatsManagerImpl;
-import edu.upc.dsa.UserManager;
-import edu.upc.dsa.UserManagerImpl;
 import edu.upc.dsa.models.*;
 import edu.upc.dsa.mysql.ItemManagerDAO;
 import edu.upc.dsa.mysql.ItemManagerDAOImpl;
@@ -14,34 +10,25 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import io.swagger.models.auth.In;
 import org.apache.log4j.Logger;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 @Api(value = "/users", description = "Endpoint to user Service")
 @Path("/users")
 public class UserService {
     final static Logger logger = Logger.getLogger(UserService.class);
-    private UserManager um;
+
     private UserManagerDAO umd;
     private ItemManagerDAO imd;
-    private StatsManager sm;
 
     public UserService() {
-        this.um = UserManagerImpl.getInstance();
         this.umd = UserManagerDAOImpl.getInstance();
         this.imd = ItemManagerDAOImpl.getInstance();
-        if(um.getUsers().size()==0){
-            um.addUser(new User("admin","admin@admin","admin"));
-        }
-        this.sm = StatsManagerImpl.getInstance();
-
     }
 
 
@@ -83,7 +70,7 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getObjects() {
 
-        List<Item> items = this.um.catalogoTienda();
+        List<Item> items = this.imd.getAll();
 
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
         return Response.status(201).entity(entity).build();

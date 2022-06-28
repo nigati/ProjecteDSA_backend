@@ -83,6 +83,9 @@ public class StatsManagerDAOImpl implements StatsManagerDAO {
             logger.error("Something happened trying to open the session: " + e.getMessage());
             return null;
         }
+        finally {
+            session.close();
+        }
     }
 
     public List<Stats> getAllSortedByKills()
@@ -99,6 +102,9 @@ public class StatsManagerDAOImpl implements StatsManagerDAO {
         } catch (Exception e) {
             logger.error("Something happened trying to open the session: " + e.getMessage());
             return null;
+        }
+        finally {
+            session.close();
         }
 
     }
