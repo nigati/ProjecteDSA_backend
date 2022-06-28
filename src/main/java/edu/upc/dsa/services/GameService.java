@@ -58,7 +58,7 @@ public class GameService {
     @ApiOperation(value = "Get the last game of the player.", notes = "asdasd", response = ForumMessage.class, responseContainer="List")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "No messages in the forum.")
+            @ApiResponse(code = 404, message = "Game not found")
     })
     @Path("/getGame/{username}")
     @Produces(MediaType.APPLICATION_JSON)
