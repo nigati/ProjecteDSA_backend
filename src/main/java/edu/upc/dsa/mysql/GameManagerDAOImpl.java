@@ -34,6 +34,7 @@ public class GameManagerDAOImpl implements GameManagerDAO {
             session.save(game);
             User u = (User)session.get(User.class, "USERNAME", game.getUsername());
             session.update(User.class,"COINS",String.valueOf(u.getCoins() + game.getCoins()), "USERNAME", game.getUsername());
+            session.update(Inventory.class, "QUANTITY", "0", "USERNAME", game.getUsername());
             logger.info("The game with id: " + game.getId() + " is being inserted");
             return 1;
         } catch (Exception e) {
