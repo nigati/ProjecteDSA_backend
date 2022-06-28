@@ -27,11 +27,8 @@ public class UserService {
     private ItemManagerDAO imd;
 
     public UserService() {
-
         this.umd = UserManagerDAOImpl.getInstance();
         this.imd = ItemManagerDAOImpl.getInstance();
-
-
     }
 
 
