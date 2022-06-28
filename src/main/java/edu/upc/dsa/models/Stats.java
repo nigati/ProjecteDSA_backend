@@ -1,6 +1,8 @@
 package edu.upc.dsa.models;
 
 public class Stats {
+
+    private int id;
     private String username;
     private int time;
     private int enemiesKilled;
@@ -37,6 +39,9 @@ public class Stats {
         this.avatar = "https://cdn.pixabay.com/photo/2017/07/11/15/51/kermit-2493979_1280.png";
     }
 
+    public int getId() {return id;}
+
+    public void setId(int id){this.id =id;}
     public int getTime()
     {
         return time;

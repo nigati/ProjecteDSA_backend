@@ -3,6 +3,7 @@ package edu.upc.dsa.mysql;
 import edu.upc.dsa.models.Game;
 import edu.upc.dsa.models.Inventory;
 import edu.upc.dsa.models.Item;
+import edu.upc.dsa.models.User;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ public class GameManagerDAOImpl implements GameManagerDAO {
         try {
             session = FactorySession.openSession();
             session.save(game);
+            User u = (User)session.get(User.class, "USERNAME", game.getUsername());
+            session.update(User.class,"COINS",String.valueOf(u.getCoins() + game.getCoins()), "USERNAME", game.getUsername());
             logger.info("The game with id: " + game.getId() + " is being inserted");
             return 1;
         } catch (Exception e) {
