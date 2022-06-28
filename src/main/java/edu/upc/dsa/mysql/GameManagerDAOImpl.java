@@ -40,6 +40,9 @@ public class GameManagerDAOImpl implements GameManagerDAO {
             logger.error("Something happened trying to open the session: " + e.getMessage());
             return 0;
         }
+        finally {
+            session.close();
+        }
     }
 
     @Override
@@ -57,6 +60,9 @@ public class GameManagerDAOImpl implements GameManagerDAO {
         } catch (Exception e) {
             logger.error("Something happened trying to open the session: " + e.getMessage());
             return null;
+        }
+        finally {
+            session.close();
         }
     }
 }

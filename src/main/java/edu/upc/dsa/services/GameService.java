@@ -1,9 +1,5 @@
 package edu.upc.dsa.services;
 
-import edu.upc.dsa.StatsManager;
-import edu.upc.dsa.StatsManagerImpl;
-import edu.upc.dsa.UserManager;
-import edu.upc.dsa.UserManagerImpl;
 import edu.upc.dsa.models.*;
 import edu.upc.dsa.mysql.*;
 import io.swagger.annotations.Api;
@@ -13,10 +9,9 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.log4j.Logger;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
+
 @Api(value = "/game", description = "Endpoint to game Service")
 @Path("/game")
 public class GameService {

@@ -1,8 +1,4 @@
 package edu.upc.dsa.services;
-import edu.upc.dsa.StatsManager;
-import edu.upc.dsa.StatsManagerImpl;
-import edu.upc.dsa.UserManager;
-import edu.upc.dsa.UserManagerImpl;
 import edu.upc.dsa.models.*;
 import edu.upc.dsa.mysql.*;
 import io.swagger.annotations.Api;
