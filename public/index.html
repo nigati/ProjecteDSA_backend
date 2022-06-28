@@ -11,7 +11,8 @@
     <script>
         $(document).ready(function () {
             let logged = localStorage.getItem("isLogged")
-            if(logged === "false"){
+            alert(logged);
+            if(logged === "true"){
                 location.href = "catalogue/index.html"
             }
 
